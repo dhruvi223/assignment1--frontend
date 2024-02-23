@@ -9,6 +9,8 @@ import Register from './Component/Register'
 import Profile from './Component/Profile'
 import CreateList from './Component/CreateList'
 import ShowList from './Component/ShowList';
+import UpdateProduct from './Component/UpdateProduct';
+import DeleteProduct from './Component/DeleteProduct';
 
 function App() {
 
@@ -50,6 +52,8 @@ function App() {
         <Route path="/profile" element={<Profile/>}/>
         <Route path="/create-list" element={<CreateList/>}/>
         <Route path='/show-list' element={<ShowList/>}/>
+        <Route path='/update' element={<UpdateProduct/>}/>
+        <Route path='/delete' element={<DeleteProduct/>}/>
       </Routes>
       </BrowserRouter>
     </div>
