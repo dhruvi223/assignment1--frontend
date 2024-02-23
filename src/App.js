@@ -1,23 +1,55 @@
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
 import logo from './logo.svg';
-import Home from './Component.js/Home';
+import Home from './Component/Home';
 import './App.css';
-import Navbar from './Component.js/Navbar';
-import { useState } from 'react';
-import Login from './Component.js/Login';
+import Navbar from './Component/Navbar';
+import { useEffect, useState } from 'react';
+import Login from './Component/Login';
+import Register from './Component/Register'
+import Profile from './Component/Profile'
+import CreateList from './Component/CreateList'
+import ShowList from './Component/ShowList';
 
 function App() {
 
-  const [loggedIn, setLoggedIn] = useState(0)
+  const [loggedIn, setLoggedIn] = useState(false)
   const [email, setEmail] = useState('')
+  const [registered, setRegistered] = useState(false)
+
+  useEffect(() => {
+    const user = JSON.parse(localStorage.getItem('user'))
+    if (!user || !user.token){
+      setLoggedIn(false)
+      return
+    }
+
+    fetch('http://localhost:8000/verify',{
+      method:'POST',
+      headers:{'jwt-token': user.token},
+    })
+   
+    .then((r) => r.json())
+    .then((r) => {setLoggedIn(console.log(r.message));
+    setEmail(user.email || '');
+    console.log(r.message)
+    })
+    //console.log(user.token)
+    //console.log(loggedIn)
+    //console.log(email);
+
+  }, [])
 
   return (
     <div className="App">
-      <Navbar/>
       <BrowserRouter>
+      <Navbar/>
       <Routes>
         <Route path="/" element={<Home email={email} loggedIn={loggedIn} setLoggedIn={setLoggedIn} />}/>
-        <Route path="/login" element={<Login email={email} loggedIn={loggedIn} setLoggedIn={setLoggedIn} />}/>
+        <Route path="/login" element={<Login email={email} loggedIn={loggedIn} setLoggedIn={setLoggedIn} setEmail={setEmail}/>}/>
+        <Route path="/register" element={<Register email={email} registered={registered} setRegistered={setRegistered} setEmail={setEmail}/>}/>
+        <Route path="/profile" element={<Profile/>}/>
+        <Route path="/create-list" element={<CreateList/>}/>
+        <Route path='/show-list' element={<ShowList/>}/>
       </Routes>
       </BrowserRouter>
     </div>
