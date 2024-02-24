@@ -1,6 +1,7 @@
 import React from "react";
 import { useState } from "react";
 import { useEffect } from "react";
+import axios from 'axios'
 
 const CreateList = () => {
   const [title, setTitle] = useState("");
@@ -9,10 +10,26 @@ const CreateList = () => {
   const [description, setDescription] = useState("");
   const [category, setCategory] = useState("");
   const [imagUrl,setImageurl] = useState("")
+  const [file, setFile] = useState();
+  const [id, setId] = useState();
 
-  useEffect(() => {
-    // Log the updated value of 'image'
-  }, [image]);
+  const handleFile = (e) => {
+     setFile(e.target.files[0])
+  }
+
+  const handleUpload = () => {
+    const formData = new FormData();
+    formData.append('image', file);
+    formData.append('id',id)
+    axios.post('http://localhost:8000/upload',formData)
+    .then(res => console.log(res))
+    .catch(err => console.log(err))
+
+  }
+
+  // useEffect(() => {
+  //   // Log the updated value of 'image'
+  // }, [image]);
 
 
   // const handleFileInputChange = () => {
@@ -77,7 +94,7 @@ const CreateList = () => {
       if (key === 'image') {
         // Extract and save only the name property
       
-        allFormData[key] = value.name;
+        allFormData[key] = value;
         console.log(value)
         console.log(value.name)
     } else {
@@ -114,6 +131,7 @@ const CreateList = () => {
                     }
                 })
                 .then((data) => {
+                    setId(data.id)
                     window.alert("Product added");
                 })
                 .catch((error) => {
@@ -205,27 +223,24 @@ const CreateList = () => {
             />
           </div>
           <div className="flex flex-col gap-4">
-            <p className="font-semibold">Image:</p>
+            
+            <div className="bg-slate-700 text-white p-3 rounded-lg uppercase hover:opacity-95 disabled:opacity-80">
+              <button onClick={onButtonClick}>Create</button>
+            </div>
+
             <div className="flex gap-4">
               <input
-                onChange={(event) => 
-                  setImage(event.target.files[0])
-                }
+                onChange={handleFile}
                 className="p-3 border border-gray-300 rounded w-full"
                 type="file"
                 id="images"
 
               />
-              <button
-                type="button"
-            
-                className="p-3 text-green-700 border border-green-700 rounded uppercase hover:shadow-lg disabled:opacity-80"
-              >
+              <button onClick={handleUpload}>Upload
               </button>
             </div>
-            <div className="bg-slate-700 text-white p-3 rounded-lg uppercase hover:opacity-95 disabled:opacity-80">
-              <button onClick={onButtonClick}>Create</button>
-            </div>
+
+
           </div>
         </div>
       </main>

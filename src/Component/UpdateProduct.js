@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react'
-
+import axios from 'axios';
 
 function UpdateProduct() {
 
@@ -9,16 +9,36 @@ function UpdateProduct() {
  const [price,setPrice] = useState('');
  const [description,setDescription] = useState('');
  const [category,setCategory] = useState('');
+ const [file, setFile] = useState();
+ const [id,setId] = useState();
 
  const updatedData = {
         "title": title,
-        "imageUrl":imageUrl,
+        "imageUrl":null,
         "price": price,
         "description":description,
         "category":category
     
     }
+
+
+    const handleFile = (e) => {
+      setFile(e.target.files[0])
+   }
+ 
+   const handleUpload = () => {
+     const formData = new FormData();
+     formData.append('image', file);
+     formData.append('title',title)
+     axios.post('http://localhost:8000/upupload',formData)
+     .then(res => console.log(res))
+     .catch(err => console.log(err))
+
+
     
+ 
+   }
+    console.log(title)
 
     const onButtonClick = () => {
         console.log('onButtonClick called')
@@ -27,6 +47,11 @@ function UpdateProduct() {
           // Handle success
           console.log('Product updated:', updatedProduct);
         })
+        .then((data) => {
+          setId(data.id)
+          console.log(id)
+      })
+        
         .catch(error => {
           // Handle error
           console.error('Failed to update product:', error);
@@ -126,19 +151,14 @@ function UpdateProduct() {
             <p className="font-semibold">Image:</p>
             <div className="flex gap-4">
               <input
-                onChange={(event) => 
-                  setImageurl(event.target.files[0])
-                }
-                className="p-3 border border-gray-300 rounded w-full"
-                type="file"
-                id="images"
+             onChange={handleFile}
+             className="p-3 border border-gray-300 rounded w-full"
+             type="file"
+             id="images"
 
               />
-              <button
-                type="button"
-            
-                className="p-3 text-green-700 border border-green-700 rounded uppercase hover:shadow-lg disabled:opacity-80"
-              >
+              
+              <button onClick={handleUpload}>Upload
               </button>
             </div>
             <div className="bg-slate-700 text-white p-3 rounded-lg uppercase hover:opacity-95 disabled:opacity-80">

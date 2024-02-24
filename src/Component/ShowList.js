@@ -1,6 +1,7 @@
 import React from 'react'
 import {useState} from 'react';
 import { useEffect } from 'react';
+import axios from 'axios'
 
 const ShowList = ()=>  {
 
@@ -13,6 +14,13 @@ const ShowList = ()=>  {
   const [data, setData] = useState([])
   //const [input, setInput] = useState('')
   const [searchData, setSearchData] = useState([])
+
+  useEffect(() => {
+    axios.get('http://localhost:8000/')
+    .then(res => console.log(res))
+    .catch(err => console.log(err))
+  }, [])
+
 
   useEffect(() => {
     const fetchData = async () => {
@@ -66,16 +74,15 @@ const ShowList = ()=>  {
   console.log(typeof data)
   
     const searchArr = searchData.map( (i, index) => {
-      return (<div className = "bg-gray-200 p-4" key={index}>
+      return (<>
           {/* <img className = "photos-img" src={i.imageUrl} /> 
           <h6>{i.price}</h6> */}
   
-        <img src="lotus-with-hands-1889661_1280.png"/>
-        <div className="max-w-sm rounded overflow-hidden shadow-lg">
+        <div key={index} className="max-w-xs rounded overflow-hidden shadow-lg">
         
-        
-        <img className="w-full" src={i.imageUrl} alt="image of product" />
-  
+        <div p-3 m-6>
+        <img className="w-full" src={`http://localhost:8000/images/`+i.imageUrl} alt="image of product" />
+        </div>
         <div className="px-6 py-4">
           <div className="font-bold text-xl mb-2">{i.title}</div>
   
@@ -91,7 +98,7 @@ const ShowList = ()=>  {
   
   
       </div>
-          </div>
+          </>
       
       )})
 
@@ -102,15 +109,15 @@ const ShowList = ()=>  {
 
 
   const arr = data.map( (i, index) => {
-    return (<div className = "bg-gray-200 p-4" key={index}>
+    return (
+    <>
         {/* <img className = "photos-img" src={i.imageUrl} /> 
         <h6>{i.price}</h6> */}
 
-      <img src="lotus-with-hands-1889661_1280.png"/>
-      <div className="max-w-sm rounded overflow-hidden shadow-lg">
+      <div key={index} className="max-w-sm rounded overflow-hidden shadow-lg">
       
       
-      <img className="w-full" src={i.imageUrl} alt="image of product" />
+      <img className="w-full" src={`http://localhost:8000/images/`+i.imageUrl} alt="image of product" />
 
       <div className="px-6 py-4">
         <div className="font-bold text-xl mb-2">{i.title}</div>
@@ -127,7 +134,7 @@ const ShowList = ()=>  {
 
 
     </div>
-        </div>
+        </>
     
     )})
 
@@ -143,7 +150,7 @@ const ShowList = ()=>  {
   return (
 
    <div>
-   < div className = "p-2 my-3 max-w-xs mx-auto border rounded-lg">
+   < div className = "p-1 my-1 max-w-xs mx-auto border rounded-lg">
       {/* <div className='bg-slate-100 p-3 flex justify-center border rounded-lg w-50'> */}
      <input className='bg-transparent focus:outline-none w-24 sm:w-64' type='text' placeholser='search here...'
         value = {title}
