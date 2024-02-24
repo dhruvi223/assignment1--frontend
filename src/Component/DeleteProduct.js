@@ -36,7 +36,7 @@ const onButtonClick = () => {
       }
   
       const message = await response.text();
-      console.log('Product deleted successfully:', message);
+      window.alert('Product deleted successfully:', message);
       return message;
     } catch (error) {
       console.error('Error deleting product:', error);

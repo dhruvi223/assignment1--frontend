@@ -18,8 +18,13 @@ function App() {
   const [email, setEmail] = useState('')
   const [registered, setRegistered] = useState(false)
 
+  // const handleSearchInput = (data) => {
+  //   setSearchInput(data)
+  // }
+
   useEffect(() => {
     const user = JSON.parse(localStorage.getItem('user'))
+
     if (!user || !user.token){
       setLoggedIn(false)
       return
