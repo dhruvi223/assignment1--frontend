@@ -18,7 +18,8 @@ function App() {
   const [loggedIn, setLoggedIn] = useState(false)
   const [email, setEmail] = useState('')
   const [registered, setRegistered] = useState(false)
-
+  console.log(loggedIn)
+  console.log(email)
   // const handleSearchInput = (data) => {
   //   setSearchInput(data)
   // }
@@ -39,6 +40,7 @@ function App() {
     .then((r) => r.json())
     .then((r) => {setLoggedIn(console.log(r.message));
     setEmail(user.email || '');
+    setLoggedIn(true)
     console.log(r.message)
     })
     //console.log(user.token)
@@ -50,7 +52,7 @@ function App() {
   return (
     <div className="App">
       <BrowserRouter>
-      <Navbar/>
+      <Navbar email={email} loggedIn={loggedIn} setLoggedIn={setLoggedIn}/>
       <Routes>
         <Route path="/" element={<Home email={email} loggedIn={loggedIn} setLoggedIn={setLoggedIn} />}/>
         <Route path="/login" element={<Login email={email} loggedIn={loggedIn} setLoggedIn={setLoggedIn} setEmail={setEmail}/>}/>

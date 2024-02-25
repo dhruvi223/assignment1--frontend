@@ -3,10 +3,10 @@ import { Outlet} from 'react-router-dom'
 import { Link } from 'react-router-dom'
 import { useState } from 'react'
 
-function Navbar({searchInput}) {
-
-
-
+const Navbar = (props) => {
+  const { loggedIn, email } = props
+ // const navigate = useNavigate()
+  console.log(loggedIn)
 
   return (
     <header className='bg-slate-200 shadow-md'>
@@ -33,16 +33,23 @@ function Navbar({searchInput}) {
           Home
         </li>
         </Link>
+        
+        {!loggedIn && (
         <Link to={'/login'}>
         <li className='text-slate-700 hover:underline'>
           Sign in
         </li>
         </Link>
+        )}
+
+       {loggedIn && (
         <Link to={'/profile'}>
         <li className='text-slate-700 hover:underline'>
           Profile
         </li>
         </Link>
+        )}
+
         <Link to={'/show-list'}>
         <li className='text-slate-700 hover:underline'>
           List

@@ -14,6 +14,83 @@ const ShowList = ()=>  {
   const [data, setData] = useState([])
   //const [input, setInput] = useState('')
   const [searchData, setSearchData] = useState([])
+  const [pid, setPid] = useState()
+  const [clickedProducts, setClickedProducts] = useState({});
+
+
+  // adding product to liked product
+
+
+
+
+
+
+  //useEffect(() => {
+    
+    const handleClick = async (newId) => {
+
+      if (!clickedProducts[newId]) {
+        setClickedProducts(prevState => ({
+          ...prevState,
+          [newId]: true, // Set clicked status for the product ID
+        }));
+      }
+
+
+
+
+      try {
+      const storedDataS = localStorage.getItem('user')
+      const storedData = JSON.parse(storedDataS)
+      const email = storedData.email;
+      setPid(newId); // Update id state with the newId
+      console.log(email)
+      console.log(pid)
+      const response = await fetch('http://localhost:8000/api/lproducts/addlProduct', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({
+        email: email,
+        pid: newId
+      })
+    });
+
+    if (!response.ok) {
+      throw new Error('Failed to like product');
+    }
+
+    // Handle success
+    console.log('Product liked successfully');
+
+  } catch (error) {
+    console.error('Error adding product:', error);
+  }
+      
+    };
+
+
+  //}, []);
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
 
   useEffect(() => {
     axios.get('http://localhost:8000/')
@@ -79,7 +156,7 @@ const ShowList = ()=>  {
           <h6>{i.price}</h6> */}
   
         <div key={index} className="max-w-xs rounded overflow-hidden shadow-lg">
-        
+        <button onClick={() => handleClick((i.id))}>Like</button>
         <div p-3 m-6>
         <img className="w-full" src={`http://localhost:8000/images/`+i.imageUrl} alt="image of product" />
         </div>
@@ -115,7 +192,9 @@ const ShowList = ()=>  {
         <h6>{i.price}</h6> */}
       <div key={index} className="max-w-sm rounded overflow-hidden shadow-lg">
       
-      
+      <button onClick={() => handleClick((i.id))}
+      style={{ backgroundColor: clickedProducts[i.id] ? 'red' : 'initial' }} 
+      >Like</button>
       <img className="w-full" src={`http://localhost:8000/images/`+i.imageUrl} alt="image of product" />
 
       <div className="px-6 py-4">

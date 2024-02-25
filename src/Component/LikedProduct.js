@@ -49,7 +49,7 @@ function LikedProduct() {
           //const pidsArray = [155, 156];
           const response = await axios.get('http://localhost:8000/api/products/getProductsbyPids', {
             params: {
-              pidsArray: [156, 155]
+              pidsArray: namesArray
             }
           },
           {headers: {
