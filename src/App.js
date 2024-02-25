@@ -11,6 +11,7 @@ import CreateList from './Component/CreateList'
 import ShowList from './Component/ShowList';
 import UpdateProduct from './Component/UpdateProduct';
 import DeleteProduct from './Component/DeleteProduct';
+import LikedProduct from './Component/LikedProduct';
 
 function App() {
 
@@ -59,6 +60,7 @@ function App() {
         <Route path='/show-list' element={<ShowList/>}/>
         <Route path='/update' element={<UpdateProduct/>}/>
         <Route path='/delete' element={<DeleteProduct/>}/>
+        <Route path='/liked' element={<LikedProduct/>}/>
       </Routes>
       </BrowserRouter>
     </div>

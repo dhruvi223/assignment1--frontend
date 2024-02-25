@@ -113,7 +113,6 @@ const ShowList = ()=>  {
     <>
         {/* <img className = "photos-img" src={i.imageUrl} /> 
         <h6>{i.price}</h6> */}
-
       <div key={index} className="max-w-sm rounded overflow-hidden shadow-lg">
       
       

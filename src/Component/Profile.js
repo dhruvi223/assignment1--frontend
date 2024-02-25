@@ -12,6 +12,19 @@ const Profile = () => {
   const [image, setImage] = useState();
   const [data,setData] = useState([])
 
+
+  useEffect(() => {
+    if (role === 'user') {
+      document.getElementById('yourDivId1').style.display = 'none';
+      document.getElementById('yourDivId2').style.display = 'none';
+      document.getElementById('yourDivId3').style.display = 'none';
+    }
+    if (role === 'admin'){
+      document.getElementById('yourDivId4').style.display = 'none';
+    }
+  }, [role]);
+
+
   useEffect(() => {
     const storedDataS = localStorage.getItem('user')
     const storedData = JSON.parse(storedDataS)
@@ -145,19 +158,25 @@ const Profile = () => {
         placeholder="Enter your role"
         onChange={(event) => {setRole(event.target.value)}}/>
         </div>
+    
     <Link to={'/create-list'}>
-    <div className = "bg-slate-700 text-white p-3 rounded-lg uppercase hover:opacity-95 disabled:opacity-80">
+    <div id="yourDivId1" className = "bg-slate-700 text-white p-3 rounded-lg uppercase hover:opacity-95 disabled:opacity-80">
         <button >Create List</button>
     </div>
     </Link>
     <Link to={'/update'}>
-    <div className = "bg-slate-700 text-white p-3 rounded-lg uppercase hover:opacity-95 disabled:opacity-80">
+    <div id="yourDivId2" className = "bg-slate-700 text-white p-3 rounded-lg uppercase hover:opacity-95 disabled:opacity-80">
         <button >Update List</button>
     </div>
     </Link>
     <Link to={'/delete'}>
-    <div className = "bg-slate-700 text-white p-3 rounded-lg uppercase hover:opacity-95 disabled:opacity-80">
+    <div id="yourDivId3" className = "bg-slate-700 text-white p-3 rounded-lg uppercase hover:opacity-95 disabled:opacity-80">
         <button >Delete List</button>
+    </div>
+    </Link>
+    <Link to={'/liked'}>
+    <div id="yourDivId4" className = "bg-slate-700 text-white p-3 rounded-lg uppercase hover:opacity-95 disabled:opacity-80">
+        <button >Your Wishlist</button>
     </div>
     </Link>
 
