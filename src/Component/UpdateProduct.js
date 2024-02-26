@@ -3,7 +3,6 @@ import axios from "axios";
 
 function UpdateProduct() {
   const [title, setTitle] = useState("");
-  const [imageUrl, setImageurl] = useState("");
   const [price, setPrice] = useState("");
   const [description, setDescription] = useState("");
   const [category, setCategory] = useState("");
@@ -21,7 +20,7 @@ function UpdateProduct() {
   const handleFile = (e) => {
     setFile(e.target.files[0]);
   };
-
+ // uploading image file
   const handleUpload = () => {
     const formData = new FormData();
     formData.append("image", file);
@@ -33,6 +32,7 @@ function UpdateProduct() {
   };
   console.log(title);
 
+  // updating product(title, price,....)
   const onButtonClick = () => {
     console.log("onButtonClick called");
     updateProduct(title, updatedData)

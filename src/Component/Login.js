@@ -29,33 +29,11 @@ const Login = (props) => {
       return;
     }
 
-    //Authentication calls
+
     Loggin();
-    // checkAccountExists((accountExist) => {
-    //   if(accountExist){
-    //     Loggin()
-    //   }else{
-    //     window.alert('Account does not exist with this email.')
-    //   }
-    // })
+  
   };
 
-  // check if account already exist
-
-  const checkAccountExists = (callback) => {
-    fetch("http://localhost:8000/check-account", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({ email }),
-    })
-      .then((r) => r.json())
-      .then((r) => {
-        callback(r?.userExists);
-      });
-  };
-  //Register
 
   //Login
 

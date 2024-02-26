@@ -1,11 +1,11 @@
 import React from "react";
 import { useNavigate } from "react-router-dom";
-import { UserList } from "./UserList";
 
 const Home = (props) => {
   const { loggedIn, email } = props;
   const navigate = useNavigate();
 
+  // removes user from local storage of browser on clicking log out
   const onButtonClick = () => {
     if (loggedIn) {
       localStorage.removeItem("user");

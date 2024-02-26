@@ -5,20 +5,12 @@ import axios from "axios";
 
 const ShowList = () => {
   const [title, setTitle] = useState("");
-  const [image, setImage] = useState(null);
-  const [price, setPrice] = useState(0);
-  const [description, setDescription] = useState("");
-  const [category, setCategory] = useState("");
   const [data, setData] = useState([]);
-  //const [input, setInput] = useState('')
   const [searchData, setSearchData] = useState([]);
   const [pid, setPid] = useState();
   const [clickedProducts, setClickedProducts] = useState({});
 
   // adding product to liked product
-
-  //useEffect(() => {
-
   const handleClick = async (newId) => {
     if (!clickedProducts[newId]) {
       setClickedProducts((prevState) => ({
@@ -31,7 +23,7 @@ const ShowList = () => {
       const storedDataS = localStorage.getItem("user");
       const storedData = JSON.parse(storedDataS);
       const email = storedData.email;
-      setPid(newId); // Update id state with the newId
+      setPid(newId); 
       console.log(email);
       console.log(pid);
       const response = await fetch(
@@ -59,7 +51,6 @@ const ShowList = () => {
     }
   };
 
-  //}, []);
 
   useEffect(() => {
     axios
@@ -68,6 +59,7 @@ const ShowList = () => {
       .catch((err) => console.log(err));
   }, []);
 
+  // getting all products from products table
   useEffect(() => {
     const fetchData = async () => {
       try {
@@ -78,8 +70,6 @@ const ShowList = () => {
         if (!response.ok) {
           throw new Error("Failed to fetch data");
         }
-        //const data = await response.json();
-        //console.log(data)
         setData(jsonData);
       } catch (error) {
         console.log(error);
@@ -93,7 +83,7 @@ const ShowList = () => {
     setTitle(value);
     Dfetch(title);
   };
-
+// getting searched product by title
   const Dfetch = async (title) => {
     try {
       const response = await fetch(
@@ -102,9 +92,7 @@ const ShowList = () => {
       if (!response.ok) {
         throw new Error("Failed to fetch data");
       }
-      const jsonData = await response.json();
-      //const data = await response.json();
-      //console.log(data)
+      const jsonData = await response.json()
       setSearchData([jsonData]);
 
       console.log(searchData);
@@ -119,8 +107,6 @@ const ShowList = () => {
   const searchArr = searchData.map((i, index) => {
     return (
       <>
-        {/* <img className = "photos-img" src={i.imageUrl} /> 
-          <h6>{i.price}</h6> */}
 
         <div key={index} className="max-w-xs rounded overflow-hidden shadow-lg">
           <button onClick={() => handleClick(i.id)}>Like</button>
@@ -151,8 +137,6 @@ const ShowList = () => {
   const arr = data.map((i, index) => {
     return (
       <>
-        {/* <img className = "photos-img" src={i.imageUrl} /> 
-        <h6>{i.price}</h6> */}
         <div key={index} className="max-w-sm rounded overflow-hidden shadow-lg">
           <button
             onClick={() => handleClick(i.id)}
@@ -188,7 +172,6 @@ const ShowList = () => {
   return (
     <div>
       <div className="p-1 my-1 max-w-xs mx-auto border rounded-lg">
-        {/* <div className='bg-slate-100 p-3 flex justify-center border rounded-lg w-50'> */}
         <input
           className="bg-transparent focus:outline-none w-24 sm:w-64"
           type="text"

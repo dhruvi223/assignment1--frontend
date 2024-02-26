@@ -1,6 +1,7 @@
 import React from "react";
 import { useState } from "react";
 
+// for deleting product
 function DeleteProduct() {
   const [title, setTitle] = useState("");
 
@@ -39,7 +40,6 @@ function DeleteProduct() {
       return message;
     } catch (error) {
       console.error("Error deleting product:", error);
-      // Handle error appropriately
       throw error;
     }
   }

@@ -17,6 +17,7 @@ const CreateList = () => {
     setFile(e.target.files[0]);
   };
 
+  // for uploading image file 
   const handleUpload = () => {
     const formData = new FormData();
     formData.append("image", file);
@@ -27,57 +28,16 @@ const CreateList = () => {
       .catch((err) => console.log(err));
   };
 
-  // useEffect(() => {
-  //   // Log the updated value of 'image'
-  // }, [image]);
-
-  // const handleFileInputChange = () => {
-  //   // const file = image;// Get the first
-
-  //   const formData = new FormData();
-  //   formData.append('image', image);
-
-  //   // console.log(file)
-  //   // const imageUrl = URL.createObjectURL(file); // Create URL for the image file
-  //   // console.log(imageUrl)
-  //   // setImageurl(imageUrl);
-  //   // Set the image source
-
-  //   //console.log("handle called")
-  //   //console.log(image)
-  // };
 
   const onButtonClick = () => {
     create();
-    //handleFileInputChange();
   };
 
-  // const create = () => {
-  //  // const formData = new FormData()
-  //   //formData.append('image', image.name)
-  //   //console.log(formData)
-  //   try{
-  //   fetch('http://localhost:8000/api/products/addProduct',{
-  //       method:'POST',
-  //       headers:{
-  //         'Content-Type': 'application/json'
-  //       },
-  //       body:JSON.stringify({title, price, description, category})
-  //      })
-  //      .then((r) => {
-  //       if(r.message === 'success'){
-  //         window.alert("Product added")
-  //       }else {
-  //         console.log('error')
-  //       }
-  //      })}
-  //      catch(err) {console.log(err)}
-  // }
 
+  // for creating new product 
   const create = () => {
     const formData = new FormData(); // Create a FormData object
 
-    // Append the image to the FormData object
     formData.append("image", image);
 
     // Append other data fields
@@ -90,17 +50,15 @@ const CreateList = () => {
     for (const entry of formData.entries()) {
       const [key, value] = entry;
       if (key === "image") {
-        // Extract and save only the name property
+
 
         allFormData[key] = value;
         console.log(value);
         console.log(value.name);
       } else {
-        // Store other form data in allFormData object
         allFormData[key] = value;
       }
     }
-    // console.log(allFormData.image.name)
     console.log(allFormData);
     console.log(allFormData[image]);
 
@@ -112,12 +70,6 @@ const CreateList = () => {
         },
         body: JSON.stringify(allFormData),
       })
-        //  .then((r) => {
-        //   if(r.message === 'success'){
-        //     window.alert("Product added")
-        //   }else {
-        //     console.log('error')
-        //   }
 
         .then((response) => {
           if (response.ok) {
@@ -139,27 +91,6 @@ const CreateList = () => {
     {
     }
 
-    // try {
-    //     fetch('http://localhost:8000/api/products/addProduct', {
-    //         method: 'POST',
-    //         body: formData // Pass formData directly as the body
-    //     })
-    //     .then((response) => {
-    //         if (response.ok) {
-    //             return response.json();
-    //         } else {
-    //             throw new Error('Network response was not ok.');
-    //         }
-    //     })
-    //     .then((data) => {
-    //         window.alert("Product added");
-    //     })
-    //     .catch((error) => {
-    //         console.error('Error:', error);
-    //     });
-    // } catch(err) {
-    //     console.log(err);
-    // }
   };
 
   return (

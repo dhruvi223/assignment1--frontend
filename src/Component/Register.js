@@ -13,7 +13,7 @@ const Register = (props) => {
     event.preventDefault();
     setEmailError("");
     setPasswordError("");
-
+    // validation
     if (email === "") {
       setEmailError("Please enter your email");
     }
@@ -66,12 +66,6 @@ const Register = (props) => {
       </div>
 
       <form className="flex flex-col gap-4">
-        {/* <div className = "border p-3 rounded-lg">
-        <input  value={name}
-        placeholder="Enter username"
-        onChange={(event) => {setName(event.target.value)}} />
-      
-    </div> */}
 
         <div className="border p-3 rounded-lg">
           <input

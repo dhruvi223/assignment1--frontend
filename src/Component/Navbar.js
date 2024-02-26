@@ -5,7 +5,6 @@ import { useState } from "react";
 
 const Navbar = (props) => {
   const { loggedIn, email } = props;
-  // const navigate = useNavigate()
   console.log(loggedIn);
 
   return (
@@ -18,13 +17,6 @@ const Navbar = (props) => {
           </h1>
         </Link>
 
-        {/* <form className='bg-slate-100 p-3 rounded-lg flex items-center'>
-        <input className='bg-transparent focus:outline-none w-24 sm:w-64' type='text' placeholser='search here...'
-        //value = {inputValue}
-        //onChange = {(e) =>  {handleInputChange}}
-        />
-        <button></button>  
-      </form> */}
 
         <ul className="flex gap-4">
           <Link to={"/"}>
@@ -47,24 +39,6 @@ const Navbar = (props) => {
             <li className="text-slate-700 hover:underline">List</li>
           </Link>
         </ul>
-
-        {/* <nav className="navbar navbar-expand-lg bg-body-tertiary">
-  <div className="container-fluid">
-    <a className="navbar-brand" to="#">Navbar</a>
-    <button className="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
-      <span className="navbar-toggler-icon"></span>
-    </button>
-    <div className="collapse navbar-collapse" id="navbarNavAltMarkup">
-      <div className="navbar-nav"> */}
-        {/* <a className="nav-link active" aria-current="page" to="/">Home</a> */}
-        {/* <a className="nav-link active" aria-current="page" to="/">Home</a>
-        <a className="nav-link" href="#">Features</a>
-        <a className="nav-link" href="#">Pricing</a>
-        <a className="nav-link disabled" aria-disabled="true">Disabled</a>
-      </div>
-    </div>
-  </div>
-</nav> */}
       </div>
     </header>
   );

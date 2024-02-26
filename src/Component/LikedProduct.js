@@ -7,9 +7,11 @@ function LikedProduct() {
   const [data, setData] = useState("");
   const [products, setProducts] = useState([]);
   useEffect(() => {
+    // get user email saved in local storage
     const storedDataS = localStorage.getItem("user");
     const storedData = JSON.parse(storedDataS);
     const email = storedData.email;
+    // get product id from likedProduct table by user id
     fetch(`http://localhost:8000/api/lproducts/allLProducts?email=${email}`)
       .then((r) => {
         if (!r.ok) {
@@ -26,21 +28,17 @@ function LikedProduct() {
         console.log(typeof data[0]);
       });
 
-    // if (Array.isArray(data)) {
-    //    console.log('is array')
-    //   } else {
-    //     console.error('data is not an array');
-    //   }
   }, []);
 
+  // nameArray contains product id
   const namesArray = Object.keys(data).map((key) => data[key].pid);
 
   console.log(Array.isArray(namesArray));
 
+  //retrieving all product information by product id
   useEffect(() => {
     const fetchProducts = async () => {
       try {
-        //const pidsArray = [155, 156];
         const response = await axios.get(
           "http://localhost:8000/api/products/getProductsbyPids",
           {
@@ -66,32 +64,6 @@ function LikedProduct() {
   }, []);
   console.log(products);
   console.log(typeof products);
-  //   useEffect(() => {
-  //       const fetchProducts = async () => {
-  //         try {
-  //           const pidsArray = [155, 156]; // Array of pids to send to the backend
-  //           const response = await fetch(`http://localhost:8000/api/products/getProductsbyPids`, {
-  //             method: 'POST',
-  //             headers: {
-  //               'Content-Type': 'application/json'
-  //             },
-  //             body: JSON.stringify({ pidsArray: [155, 156] }) // Send pidsArray in the request body
-  //           });
-  //           if (!response.ok) {
-  //             throw new Error('Failed to fetch products');
-  //           }
-  //           const productsData = await response.json();
-  //           setProducts(productsData);
-  //         } catch (error) {
-  //           console.error('Error fetching products:', error);
-  //           // Handle error
-  //         }
-  //       };
-
-  //       fetchProducts();
-
-  //       //console.log(products)
-  // }, []);
 
   const RenderItems = () => {
     return (
@@ -127,7 +99,6 @@ function LikedProduct() {
                   </span>
                 </div>
               </div>
-              {/* <p>Name: {data[key].name}</p> */}
             </div>
           ))}
         </div>
@@ -135,9 +106,6 @@ function LikedProduct() {
     );
   };
 
-  // const pid = data.map((i, index) => {
-  //     return {pid :i.pid};
-  // })
 
   return (
     <div>
