@@ -1,7 +1,7 @@
 import React from "react";
 import { useState } from "react";
 import { useEffect } from "react";
-import axios from 'axios'
+import axios from "axios";
 
 const CreateList = () => {
   const [title, setTitle] = useState("");
@@ -9,50 +9,48 @@ const CreateList = () => {
   const [price, setPrice] = useState(0);
   const [description, setDescription] = useState("");
   const [category, setCategory] = useState("");
-  const [imagUrl,setImageurl] = useState("")
+  const [imagUrl, setImageurl] = useState("");
   const [file, setFile] = useState();
   const [id, setId] = useState();
 
   const handleFile = (e) => {
-     setFile(e.target.files[0])
-  }
+    setFile(e.target.files[0]);
+  };
 
   const handleUpload = () => {
     const formData = new FormData();
-    formData.append('image', file);
-    formData.append('id',id)
-    axios.post('http://localhost:8000/upload',formData)
-    .then(res => console.log(res))
-    .catch(err => console.log(err))
-
-  }
+    formData.append("image", file);
+    formData.append("id", id);
+    axios
+      .post("http://localhost:8000/upload", formData)
+      .then((res) => console.log(res))
+      .catch((err) => console.log(err));
+  };
 
   // useEffect(() => {
   //   // Log the updated value of 'image'
   // }, [image]);
 
-
   // const handleFileInputChange = () => {
-  //   // const file = image;// Get the first 
-    
+  //   // const file = image;// Get the first
+
   //   const formData = new FormData();
-  //   formData.append('image', image); 
-    
+  //   formData.append('image', image);
+
   //   // console.log(file)
   //   // const imageUrl = URL.createObjectURL(file); // Create URL for the image file
   //   // console.log(imageUrl)
   //   // setImageurl(imageUrl);
   //   // Set the image source
-    
+
   //   //console.log("handle called")
   //   //console.log(image)
   // };
 
   const onButtonClick = () => {
-    create()
+    create();
     //handleFileInputChange();
   };
-
 
   // const create = () => {
   //  // const formData = new FormData()
@@ -80,68 +78,66 @@ const CreateList = () => {
     const formData = new FormData(); // Create a FormData object
 
     // Append the image to the FormData object
-    formData.append('image', image);
+    formData.append("image", image);
 
     // Append other data fields
-    formData.append('title', title);
-    formData.append('price', price);
-    formData.append('description', description);
-    formData.append('category', category);
+    formData.append("title", title);
+    formData.append("price", price);
+    formData.append("description", description);
+    formData.append("category", category);
     const allFormData = {};
 
     for (const entry of formData.entries()) {
       const [key, value] = entry;
-      if (key === 'image') {
+      if (key === "image") {
         // Extract and save only the name property
-      
+
         allFormData[key] = value;
-        console.log(value)
-        console.log(value.name)
-    } else {
+        console.log(value);
+        console.log(value.name);
+      } else {
         // Store other form data in allFormData object
         allFormData[key] = value;
+      }
     }
-  }
- // console.log(allFormData.image.name)
- console.log(allFormData)
- console.log(allFormData[image])
+    // console.log(allFormData.image.name)
+    console.log(allFormData);
+    console.log(allFormData[image]);
 
-
-  try{
-      fetch('http://localhost:8000/api/products/addProduct',{
-          method:'POST',
-          headers:{
-            'Content-Type': 'application/json'
-          },
-          body:JSON.stringify(allFormData)
-         })
+    try {
+      fetch("http://localhost:8000/api/products/addProduct", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(allFormData),
+      })
         //  .then((r) => {
         //   if(r.message === 'success'){
         //     window.alert("Product added")
         //   }else {
         //     console.log('error')
         //   }
-          
 
-          .then((response) => {
-                    if (response.ok) {
-                        return response.json();
-                    } else {
-                        throw new Error('Network response was not ok.');
-                    }
-                })
-                .then((data) => {
-                    setId(data.id)
-                    window.alert("Product added");
-                })
-                .catch((error) => {
-                    console.error('Error:', error);
-
-
-         })}
-         catch(err) {console.log(err)}{
+        .then((response) => {
+          if (response.ok) {
+            return response.json();
+          } else {
+            throw new Error("Network response was not ok.");
+          }
+        })
+        .then((data) => {
+          setId(data.id);
+          window.alert("Product added");
+        })
+        .catch((error) => {
+          console.error("Error:", error);
+        });
+    } catch (err) {
+      console.log(err);
     }
-  
+    {
+    }
 
     // try {
     //     fetch('http://localhost:8000/api/products/addProduct', {
@@ -164,8 +160,7 @@ const CreateList = () => {
     // } catch(err) {
     //     console.log(err);
     // }
-}
-
+  };
 
   return (
     <div>
@@ -195,7 +190,6 @@ const CreateList = () => {
               onChange={(event) => {
                 setPrice(event.target.value);
               }}
-            
             />
             <input
               type="text"
@@ -206,8 +200,6 @@ const CreateList = () => {
               onChange={(event) => {
                 setDescription(event.target.value);
               }}
-
-    
             />
 
             <input
@@ -219,11 +211,9 @@ const CreateList = () => {
               onChange={(event) => {
                 setCategory(event.target.value);
               }}
-
             />
           </div>
           <div className="flex flex-col gap-4">
-            
             <div className="bg-slate-700 text-white p-3 rounded-lg uppercase hover:opacity-95 disabled:opacity-80">
               <button onClick={onButtonClick}>Create</button>
             </div>
@@ -234,13 +224,9 @@ const CreateList = () => {
                 className="p-3 border border-gray-300 rounded w-full"
                 type="file"
                 id="images"
-
               />
-              <button onClick={handleUpload}>Upload
-              </button>
+              <button onClick={handleUpload}>Upload</button>
             </div>
-
-
           </div>
         </div>
       </main>

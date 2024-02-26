@@ -1,25 +1,24 @@
-import React from 'react'
-import { Outlet} from 'react-router-dom'
-import { Link } from 'react-router-dom'
-import { useState } from 'react'
+import React from "react";
+import { Outlet } from "react-router-dom";
+import { Link } from "react-router-dom";
+import { useState } from "react";
 
 const Navbar = (props) => {
-  const { loggedIn, email } = props
- // const navigate = useNavigate()
-  console.log(loggedIn)
+  const { loggedIn, email } = props;
+  // const navigate = useNavigate()
+  console.log(loggedIn);
 
   return (
-    <header className='bg-slate-200 shadow-md'>
-      <div className='flex justify-between items-center max-w-6xl mx-auto p-3'>
+    <header className="bg-slate-200 shadow-md">
+      <div className="flex justify-between items-center max-w-6xl mx-auto p-3">
+        <Link to={"/"}>
+          <h1 className="font-bold text-sm sm:text-xl flex flex-wrap">
+            <span className="text-slate-500">Ecommerce</span>
+            <span className="text-slate-700">Platform</span>
+          </h1>
+        </Link>
 
-      <Link to={'/'}>
-              <h1 className='font-bold text-sm sm:text-xl flex flex-wrap'>
-                <span className='text-slate-500'>Ecommerce</span>
-                <span className='text-slate-700'>Platform</span>
-              </h1>
-      </Link>
-
-      {/* <form className='bg-slate-100 p-3 rounded-lg flex items-center'>
+        {/* <form className='bg-slate-100 p-3 rounded-lg flex items-center'>
         <input className='bg-transparent focus:outline-none w-24 sm:w-64' type='text' placeholser='search here...'
         //value = {inputValue}
         //onChange = {(e) =>  {handleInputChange}}
@@ -27,38 +26,29 @@ const Navbar = (props) => {
         <button></button>  
       </form> */}
 
-      <ul className='flex gap-4'>
-        <Link to={'/'}>
-        <li className='text-slate-700 hover:underline'>
-          Home
-        </li>
-        </Link>
-        
-        {!loggedIn && (
-        <Link to={'/login'}>
-        <li className='text-slate-700 hover:underline'>
-          Sign in
-        </li>
-        </Link>
-        )}
+        <ul className="flex gap-4">
+          <Link to={"/"}>
+            <li className="text-slate-700 hover:underline">Home</li>
+          </Link>
 
-       {loggedIn && (
-        <Link to={'/profile'}>
-        <li className='text-slate-700 hover:underline'>
-          Profile
-        </li>
-        </Link>
-        )}
+          {!loggedIn && (
+            <Link to={"/login"}>
+              <li className="text-slate-700 hover:underline">Sign in</li>
+            </Link>
+          )}
 
-        <Link to={'/show-list'}>
-        <li className='text-slate-700 hover:underline'>
-          List
-        </li>
-        </Link>
-      </ul>
+          {loggedIn && (
+            <Link to={"/profile"}>
+              <li className="text-slate-700 hover:underline">Profile</li>
+            </Link>
+          )}
 
+          <Link to={"/show-list"}>
+            <li className="text-slate-700 hover:underline">List</li>
+          </Link>
+        </ul>
 
-      {/* <nav className="navbar navbar-expand-lg bg-body-tertiary">
+        {/* <nav className="navbar navbar-expand-lg bg-body-tertiary">
   <div className="container-fluid">
     <a className="navbar-brand" to="#">Navbar</a>
     <button className="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
@@ -75,15 +65,9 @@ const Navbar = (props) => {
     </div>
   </div>
 </nav> */}
-
-
-
-
-
-
-</div>
+      </div>
     </header>
-  )
-}
+  );
+};
 
-export default Navbar
+export default Navbar;

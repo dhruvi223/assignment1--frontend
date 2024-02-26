@@ -1,40 +1,37 @@
-import React from 'react'
-import { useNavigate } from 'react-router-dom'
-import {UserList} from './UserList'
-
+import React from "react";
+import { useNavigate } from "react-router-dom";
+import { UserList } from "./UserList";
 
 const Home = (props) => {
-    
-  const { loggedIn, email } = props
-  const navigate = useNavigate()
-
+  const { loggedIn, email } = props;
+  const navigate = useNavigate();
 
   const onButtonClick = () => {
     if (loggedIn) {
-      localStorage.removeItem('user')
-      props.setLoggedIn(false)
+      localStorage.removeItem("user");
+      props.setLoggedIn(false);
     } else {
-      navigate('/login')
+      navigate("/login");
     }
-  }
+  };
 
   return (
     <div>
-      <div className={'titleContainer'}>
+      <div className={"titleContainer"}>
         <div>Welcome!</div>
       </div>
       <div>This is the home page.</div>
-      <div className={'buttonContainer'}>
+      <div className={"buttonContainer"}>
         <input
-          className={'inputButton'}
+          className={"inputButton"}
           type="button"
           onClick={onButtonClick}
-          value={loggedIn ? 'Log out' : 'Log in'}
+          value={loggedIn ? "Log out" : "Log in"}
         />
         {loggedIn ? <div>Your email address is {email}</div> : <div />}
       </div>
     </div>
-  )
-}
+  );
+};
 
-export default Home
+export default Home;
