@@ -21,19 +21,12 @@ function LikedProduct() {
       })
       .then((data) => {
         setData(data);
-        console.log(data);
-        console.log(typeof data);
-        console.log(data[0]);
-        console.log(data[1]);
-        console.log(typeof data[0]);
       });
 
   }, []);
 
   // nameArray contains product id
   const namesArray = Object.keys(data).map((key) => data[key].pid);
-
-  console.log(Array.isArray(namesArray));
 
   //retrieving all product information by product id
   useEffect(() => {
@@ -53,17 +46,12 @@ function LikedProduct() {
           }
         );
         setProducts(response.data);
-        console.log(response.data); // Log products data after setting state
       } catch (error) {
-        console.error("Error fetching products:", error.response.data);
-        // Handle error
       }
     };
 
     fetchProducts();
   }, []);
-  console.log(products);
-  console.log(typeof products);
 
   const RenderItems = () => {
     return (

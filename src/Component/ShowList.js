@@ -10,6 +10,7 @@ const ShowList = () => {
   const [pid, setPid] = useState();
   const [clickedProducts, setClickedProducts] = useState({});
 
+
   // adding product to liked product
   const handleClick = async (newId) => {
     if (!clickedProducts[newId]) {
@@ -24,8 +25,6 @@ const ShowList = () => {
       const storedData = JSON.parse(storedDataS);
       const email = storedData.email;
       setPid(newId); 
-      console.log(email);
-      console.log(pid);
       const response = await fetch(
         "http://localhost:8000/api/lproducts/addlProduct",
         {
@@ -44,10 +43,8 @@ const ShowList = () => {
         throw new Error("Failed to like product");
       }
 
-      // Handle success
-      console.log("Product liked successfully");
     } catch (error) {
-      console.error("Error adding product:", error);
+  
     }
   };
 
@@ -72,7 +69,7 @@ const ShowList = () => {
         }
         setData(jsonData);
       } catch (error) {
-        console.log(error);
+       
       }
     };
 
@@ -95,14 +92,13 @@ const ShowList = () => {
       const jsonData = await response.json()
       setSearchData([jsonData]);
 
-      console.log(searchData);
+      
     } catch (error) {
-      console.log(error);
+     
     }
   };
 
-  console.log(searchData[0]);
-  console.log(typeof data);
+
 
   const searchArr = searchData.map((i, index) => {
     return (
@@ -138,7 +134,7 @@ const ShowList = () => {
     return (
       <>
         <div key={index} className="max-w-sm rounded overflow-hidden shadow-lg">
-          <button
+          <button className="border rounded-lg p-3"
             onClick={() => handleClick(i.id)}
             style={{
               backgroundColor: clickedProducts[i.id] ? "red" : "initial",
@@ -146,6 +142,9 @@ const ShowList = () => {
           >
             Like
           </button>
+
+       
+
           <img
             className="w-full"
             src={`http://localhost:8000/images/` + i.imageUrl}

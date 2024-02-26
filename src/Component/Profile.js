@@ -7,9 +7,6 @@ import { Link } from "react-router-dom";
 const Profile = () => {
   const [email, setEmail] = useState("");
   const [role, setRole] = useState("");
-  const [title, setTitle] = useState("");
-  const [image, setImage] = useState();
-  const [data, setData] = useState([]);
 
   useEffect(() => {
     if (role === "user") {

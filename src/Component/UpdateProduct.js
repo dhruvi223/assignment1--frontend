@@ -1,7 +1,8 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
-
+import { toast } from 'react-hot-toast';
 function UpdateProduct() {
+
   const [title, setTitle] = useState("");
   const [price, setPrice] = useState("");
   const [description, setDescription] = useState("");
@@ -38,7 +39,6 @@ function UpdateProduct() {
     updateProduct(title, updatedData)
       .then((updatedProduct) => {
         // Handle success
-        console.log("Product updated:", updatedProduct);
       })
       .then((data) => {
         setId(data.id);
@@ -46,8 +46,7 @@ function UpdateProduct() {
       })
 
       .catch((error) => {
-        // Handle error
-        console.error("Failed to update product:", error);
+        
       });
   };
 
@@ -71,12 +70,10 @@ function UpdateProduct() {
       if (response.ok) {
         console.log("ok");
         const updatedProduct = await response.json();
-        window.alert("Product updated successfully:", updatedProduct);
+        toast.success("Product updated successfully:", updatedProduct);
         return updatedProduct;
       }
     } catch (error) {
-      console.error("Error updating product:", error);
-      // Handle error appropriately
       throw error;
     }
   }

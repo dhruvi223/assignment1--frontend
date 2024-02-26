@@ -2,6 +2,7 @@ import React from "react";
 import { useState } from "react";
 import { useEffect } from "react";
 import axios from "axios";
+import { toast } from 'react-hot-toast';
 
 const CreateList = () => {
   const [title, setTitle] = useState("");
@@ -53,14 +54,10 @@ const CreateList = () => {
 
 
         allFormData[key] = value;
-        console.log(value);
-        console.log(value.name);
       } else {
         allFormData[key] = value;
       }
     }
-    console.log(allFormData);
-    console.log(allFormData[image]);
 
     try {
       fetch("http://localhost:8000/api/products/addProduct", {
@@ -80,13 +77,12 @@ const CreateList = () => {
         })
         .then((data) => {
           setId(data.id);
-          window.alert("Product added");
+          toast.success("Product added");
         })
         .catch((error) => {
-          console.error("Error:", error);
         });
     } catch (err) {
-      console.log(err);
+  
     }
     {
     }

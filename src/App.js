@@ -11,16 +11,12 @@ import ShowList from "./Component/ShowList";
 import UpdateProduct from "./Component/UpdateProduct";
 import DeleteProduct from "./Component/DeleteProduct";
 import LikedProduct from "./Component/LikedProduct";
+import { Toaster, toast } from 'react-hot-toast';
 
 function App() {
   const [loggedIn, setLoggedIn] = useState(false);
   const [email, setEmail] = useState("");
   const [registered, setRegistered] = useState(false);
-  console.log(loggedIn);
-  console.log(email);
-  // const handleSearchInput = (data) => {
-  //   setSearchInput(data)
-  // }
 
   useEffect(() => {
     const user = JSON.parse(localStorage.getItem("user"));
@@ -36,18 +32,15 @@ function App() {
     })
       .then((r) => r.json())
       .then((r) => {
-        setLoggedIn(console.log(r.message));
         setEmail(user.email || "");
         setLoggedIn(true);
-        console.log(r.message);
       });
-    //console.log(user.token)
-    //console.log(loggedIn)
-    //console.log(email);
   }, []);
 
   return (
+    // <ToastProvider>
     <div className="App">
+      <Toaster />
       <BrowserRouter>
         <Navbar email={email} loggedIn={loggedIn} setLoggedIn={setLoggedIn} />
         <Routes>
@@ -92,6 +85,7 @@ function App() {
         </Routes>
       </BrowserRouter>
     </div>
+    // </ToastProvider>
   );
 }
 

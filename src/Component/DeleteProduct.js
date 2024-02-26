@@ -1,20 +1,18 @@
 import React from "react";
 import { useState } from "react";
+import { useToaster } from 'react-hot-toast';
 
 // for deleting product
 function DeleteProduct() {
+  const toaster = useToaster();
   const [title, setTitle] = useState("");
 
   const onButtonClick = () => {
     console.log("onButtonClick called");
     deleteProduct(title)
       .then((message) => {
-        // Handle success
-        console.log("Product deleted:", message);
       })
       .catch((error) => {
-        // Handle error
-        console.error("Failed to delete product:", error);
       });
   };
 
@@ -36,10 +34,10 @@ function DeleteProduct() {
       }
 
       const message = await response.text();
-      window.alert("Product deleted successfully:", message);
+      toaster.success("Product deleted successfully:" + message);
       return message;
     } catch (error) {
-      console.error("Error deleting product:", error);
+ 
       throw error;
     }
   }

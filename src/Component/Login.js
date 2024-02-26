@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { Link } from "react-router-dom";
+import { toast } from 'react-hot-toast';
 
 const Login = (props) => {
   const [email, setEmail] = useState("");
@@ -8,7 +9,6 @@ const Login = (props) => {
   const [emailError, setEmailError] = useState("");
   const [passwordError, setPasswordError] = useState("");
   const navigate = useNavigate();
-
   const onButtonClick = () => {
     setEmailError("");
     setPasswordError("");
@@ -56,9 +56,9 @@ const Login = (props) => {
           props.setEmail(email);
           navigate("/");
         } else if (r.message === "Invalid password") {
-          window.alert("Password is incorrect");
+          toast.success("Password is incorrect");
         } else if (r.message === "Email is not registered") {
-          window.alert("This email is not registered, create a new account");
+          toast.success("This email is not registered, create a new account");
         }
       });
   };

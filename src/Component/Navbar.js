@@ -5,7 +5,6 @@ import { useState } from "react";
 
 const Navbar = (props) => {
   const { loggedIn, email } = props;
-  console.log(loggedIn);
 
   return (
     <header className="bg-slate-200 shadow-md">

@@ -1,6 +1,8 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { Link } from "react-router-dom";
+import { toast } from 'react-hot-toast';
+
 const Register = (props) => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -43,7 +45,6 @@ const Register = (props) => {
     })
       .then((r) => r.json())
       .then((r) => {
-        console.log(r.message);
         if (r.message === "success") {
           localStorage.setItem(
             "user",
@@ -54,7 +55,7 @@ const Register = (props) => {
           navigate("/");
         }
         if (r.message === "This email already exist") {
-          window.alert("This email already exist");
+          toast.success("This email already exist");
         }
       });
   };
