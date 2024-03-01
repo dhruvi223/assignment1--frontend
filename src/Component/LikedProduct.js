@@ -1,51 +1,45 @@
 import React from "react";
 import { useState } from "react";
 import { useEffect } from "react";
-import axios from "axios";
+import { fetchProductsByPids } from "../api";
+import { fetchLProductsByEmail } from "../api";
 
 function LikedProduct() {
   const [data, setData] = useState("");
   const [products, setProducts] = useState([]);
+  
+  
   useEffect(() => {
     // get user email saved in local storage
     const storedDataS = localStorage.getItem("user");
+    if (!storedDataS) {
+      return;
+    }
     const storedData = JSON.parse(storedDataS);
     const email = storedData.email;
+
     // get product id from likedProduct table by user id
-    fetch(`http://localhost:8000/api/lproducts/allLProducts?email=${email}`)
-      .then((r) => {
-        if (!r.ok) {
-          throw new Error("Failed to fetch data ");
-        }
-        return r.json();
-      })
+    if (email) {
+    fetchLProductsByEmail(email)
       .then((data) => {
         setData(data);
       });
+    }
 
   }, []);
 
+
+
+
   // nameArray contains product id
   const namesArray = Object.keys(data).map((key) => data[key].pid);
-
+  
   //retrieving all product information by product id
   useEffect(() => {
     const fetchProducts = async () => {
       try {
-        const response = await axios.get(
-          "http://localhost:8000/api/products/getProductsbyPids",
-          {
-            params: {
-              pidsArray: namesArray,
-            },
-          },
-          {
-            headers: {
-              "Content-Type": "application/json",
-            },
-          }
-        );
-        setProducts(response.data);
+        const productsData = await fetchProductsByPids(namesArray);
+        setProducts(productsData);
       } catch (error) {
       }
     };
@@ -58,10 +52,8 @@ function LikedProduct() {
       <div>
         <h1 className="text-3xl text-center font-semibold my-7">My Wishlist</h1>
         <div className="grid grid-cols-3 gap-4">
-          {/* Iterate over the keys of `data` */}
           {Object.keys(products).map((key) => (
             <div key={key}>
-              {/* Render each item */}
               <div className="max-w-sm rounded overflow-hidden shadow-lg">
                 <img
                   className="w-full"

@@ -1,41 +1,23 @@
 import React from "react";
 import { useState } from "react";
-import { useToaster } from 'react-hot-toast';
-
+import { toast } from 'react-hot-toast';
+import { deleteproduct } from "../api";
 // for deleting product
 function DeleteProduct() {
-  const toaster = useToaster();
   const [title, setTitle] = useState("");
 
   const onButtonClick = () => {
-    console.log("onButtonClick called");
-    deleteProduct(title)
-      .then((message) => {
-      })
-      .catch((error) => {
-      });
+  
+    try {
+      const message = deleteProduct(title);
+    } catch (error) {
+    }
   };
 
+  // for deleting product
   async function deleteProduct(title) {
     try {
-      const response = await fetch(
-        "http://localhost:8000/api/products/delete",
-        {
-          method: "DELETE",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify({ title }),
-        }
-      );
-
-      if (!response.ok) {
-        throw new Error("Failed to delete product");
-      }
-
-      const message = await response.text();
-      toaster.success("Product deleted successfully:" + message);
-      return message;
+      const message = await deleteproduct(title);
     } catch (error) {
  
       throw error;

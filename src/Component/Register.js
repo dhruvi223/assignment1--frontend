@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { Link } from "react-router-dom";
 import { toast } from 'react-hot-toast';
+import { registerUser } from "../api";
 
 const Register = (props) => {
   const [email, setEmail] = useState("");
@@ -15,6 +16,7 @@ const Register = (props) => {
     event.preventDefault();
     setEmailError("");
     setPasswordError("");
+    
     // validation
     if (email === "") {
       setEmailError("Please enter your email");
@@ -35,30 +37,8 @@ const Register = (props) => {
   };
 
   const Register = () => {
-    console.log("a");
-    fetch("http://localhost:8000/authreg", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({ email, password, role }),
-    })
-      .then((r) => r.json())
-      .then((r) => {
-        if (r.message === "success") {
-          localStorage.setItem(
-            "user",
-            JSON.stringify({ email, token: r.token })
-          );
-          props.setRegistered(true);
-          props.setEmail(email);
-          navigate("/");
-        }
-        if (r.message === "This email already exist") {
-          toast.success("This email already exist");
-        }
-      });
-  };
+    registerUser(email, password, role, props, navigate, toast);
+  }
 
   return (
     <div className="p-3 max-w-lg mx-auto">

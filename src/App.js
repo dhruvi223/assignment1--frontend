@@ -12,6 +12,8 @@ import UpdateProduct from "./Component/UpdateProduct";
 import DeleteProduct from "./Component/DeleteProduct";
 import LikedProduct from "./Component/LikedProduct";
 import { Toaster, toast } from 'react-hot-toast';
+import { verifyUser } from "./api";
+
 
 function App() {
   const [loggedIn, setLoggedIn] = useState(false);
@@ -19,26 +21,21 @@ function App() {
   const [registered, setRegistered] = useState(false);
 
   useEffect(() => {
-    const user = JSON.parse(localStorage.getItem("user"));
+    const fetchData = async () => {
+      try {
+        const { loggedIn, email } = await verifyUser();
+        setLoggedIn(loggedIn);
+        setEmail(email);
+      } catch (error) {
+      }
+    };
 
-    if (!user || !user.token) {
-      setLoggedIn(false);
-      return;
-    }
+    fetchData();
 
-    fetch("http://localhost:8000/verify", {
-      method: "POST",
-      headers: { "jwt-token": user.token },
-    })
-      .then((r) => r.json())
-      .then((r) => {
-        setEmail(user.email || "");
-        setLoggedIn(true);
-      });
+
   }, []);
 
   return (
-    // <ToastProvider>
     <div className="App">
       <Toaster />
       <BrowserRouter>
@@ -85,7 +82,6 @@ function App() {
         </Routes>
       </BrowserRouter>
     </div>
-    // </ToastProvider>
   );
 }
 

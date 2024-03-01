@@ -1,8 +1,7 @@
 import React, { useState } from "react";
-import { useNavigate } from "react-router-dom";
 import { useEffect } from "react";
 import { Link } from "react-router-dom";
-
+import { getUserData } from "../api";
 
 const Profile = () => {
   const [email, setEmail] = useState("");
@@ -23,27 +22,9 @@ const Profile = () => {
     const storedDataS = localStorage.getItem("user");
     const storedData = JSON.parse(storedDataS);
     const userEmail = storedData.email;
-    const fetchData = async () => {
-      try {
-        const response = await fetch(
-          `http://localhost:8000/api/users/get?email=${encodeURIComponent(
-            userEmail
-          )}`
-        );
-        if (!response.ok) {
-          throw new Error("Failed to fetch data");
-        }
-        const data = await response.json();
-        setEmail(data.email);
-        setRole(data.role);
-      } catch (error) {
-        console.log(error);
-      }
-    };
 
-    fetchData();
+    getUserData(userEmail, setEmail, setRole);
   }, []);
-
 
   return (
     <>
@@ -53,7 +34,6 @@ const Profile = () => {
         </div>
 
         <form className="flex flex-col gap-4">
-
           <div className="border p-3 rounded-lg">
             <input
               value={email}
@@ -108,8 +88,6 @@ const Profile = () => {
           </Link>
         </form>
       </div>
-
-
     </>
   );
 };

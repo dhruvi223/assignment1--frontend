@@ -1,6 +1,8 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 import { toast } from 'react-hot-toast';
+import { updateproduct } from "../api";
+import { uploadImage } from "../api";
 function UpdateProduct() {
 
   const [title, setTitle] = useState("");
@@ -21,63 +23,30 @@ function UpdateProduct() {
   const handleFile = (e) => {
     setFile(e.target.files[0]);
   };
- // uploading image file
-  const handleUpload = () => {
-    const formData = new FormData();
-    formData.append("image", file);
-    formData.append("title", title);
-    axios
-      .post("http://localhost:8000/upupload", formData)
-      .then((res) => console.log(res))
-      .catch((err) => console.log(err));
+ // uploading image file while updating product
+  const handleUpload = async () => {
+    try {
+      const res = await uploadImage(file, title);
+    } catch (error) {
+    }
   };
-  console.log(title);
 
-  // updating product(title, price,....)
+  // updating product
   const onButtonClick = () => {
     console.log("onButtonClick called");
     updateProduct(title, updatedData)
-      .then((updatedProduct) => {
-        // Handle success
-      })
-      .then((data) => {
-        setId(data.id);
-        console.log(id);
-      })
-
       .catch((error) => {
         
       });
   };
 
   async function updateProduct(title, updatedData) {
-    console.log("called");
     try {
-      const response = await fetch(
-        `http://localhost:8000/api/products/update/${title}`,
-        {
-          method: "PUT",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify(updatedData),
-        }
-      );
-
-      if (!response.ok) {
-        throw new Error("Failed to update product");
-      }
-      if (response.ok) {
-        console.log("ok");
-        const updatedProduct = await response.json();
-        toast.success("Product updated successfully:", updatedProduct);
-        return updatedProduct;
-      }
+      const updatedProduct = await updateproduct(title, updatedData, toast);
     } catch (error) {
-      throw error;
     }
+    
   }
-
   return (
     <>
       <div>
@@ -132,6 +101,9 @@ function UpdateProduct() {
             </div>
             <div className="flex flex-col gap-4">
               <p className="font-semibold">Image:</p>
+              <div className="bg-slate-700 text-white p-3 rounded-lg uppercase hover:opacity-95 disabled:opacity-80">
+                <button onClick={onButtonClick}>update</button>
+              </div>
               <div className="flex gap-4">
                 <input
                   onChange={handleFile}
@@ -141,9 +113,6 @@ function UpdateProduct() {
                 />
 
                 <button onClick={handleUpload}>Upload</button>
-              </div>
-              <div className="bg-slate-700 text-white p-3 rounded-lg uppercase hover:opacity-95 disabled:opacity-80">
-                <button onClick={onButtonClick}>update</button>
               </div>
             </div>
           </div>

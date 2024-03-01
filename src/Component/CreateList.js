@@ -1,8 +1,7 @@
 import React from "react";
 import { useState } from "react";
-import { useEffect } from "react";
-import axios from "axios";
-import { toast } from 'react-hot-toast';
+import { createProduct } from "../api";
+import { uploadImageincreateList } from "../api";
 
 const CreateList = () => {
   const [title, setTitle] = useState("");
@@ -18,34 +17,27 @@ const CreateList = () => {
     setFile(e.target.files[0]);
   };
 
-  // for uploading image file 
-  const handleUpload = () => {
+  // for uploading image file in creating product
+  const handleUpload = async () => {
+    try{
     const formData = new FormData();
     formData.append("image", file);
     formData.append("id", id);
-    axios
-      .post("http://localhost:8000/upload", formData)
-      .then((res) => console.log(res))
-      .catch((err) => console.log(err));
+    const responseData = await uploadImageincreateList(formData);
+    }
+    catch(error){
+    }
   };
 
-
-  const onButtonClick = () => {
-    create();
-  };
-
-
-  // for creating new product 
-  const create = () => {
-    const formData = new FormData(); // Create a FormData object
-
-    formData.append("image", image);
-
-    // Append other data fields
+// creating product
+  const onButtonClick = async () => {
+    //create();
+    const formData = new FormData();
     formData.append("title", title);
     formData.append("price", price);
     formData.append("description", description);
     formData.append("category", category);
+
     const allFormData = {};
 
     for (const entry of formData.entries()) {
@@ -60,34 +52,13 @@ const CreateList = () => {
     }
 
     try {
-      fetch("http://localhost:8000/api/products/addProduct", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(allFormData),
-      })
-
-        .then((response) => {
-          if (response.ok) {
-            return response.json();
-          } else {
-            throw new Error("Network response was not ok.");
-          }
-        })
-        .then((data) => {
-          setId(data.id);
-          toast.success("Product added");
-        })
-        .catch((error) => {
-        });
-    } catch (err) {
-  
-    }
-    {
+      const data = await createProduct(allFormData);
+      setId(data.id)
+    } catch (error) {
     }
 
   };
+
 
   return (
     <div>

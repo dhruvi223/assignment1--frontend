@@ -1,7 +1,5 @@
 import React from "react";
-import { Outlet } from "react-router-dom";
 import { Link } from "react-router-dom";
-import { useState } from "react";
 
 const Navbar = (props) => {
   const { loggedIn, email } = props;

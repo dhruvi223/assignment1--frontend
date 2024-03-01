@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { Link } from "react-router-dom";
 import { toast } from 'react-hot-toast';
+import { loginUser } from "../api";
 
 const Login = (props) => {
   const [email, setEmail] = useState("");
@@ -34,34 +35,11 @@ const Login = (props) => {
   
   };
 
-
-  //Login
-
   const Loggin = () => {
-    fetch("http://localhost:8000/auth", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({ email, password }),
-    })
-      .then((r) => r.json())
-      .then((r) => {
-        if (r.message === "success") {
-          localStorage.setItem(
-            "user",
-            JSON.stringify({ email, token: r.token })
-          );
-          props.setLoggedIn(true);
-          props.setEmail(email);
-          navigate("/");
-        } else if (r.message === "Invalid password") {
-          toast.success("Password is incorrect");
-        } else if (r.message === "Email is not registered") {
-          toast.success("This email is not registered, create a new account");
-        }
-      });
+
+    loginUser(email, password, props, navigate, toast);
   };
+
 
   return (
     <div className="p-3 max-w-lg mx-auto">

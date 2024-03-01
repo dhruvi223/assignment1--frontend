@@ -2,6 +2,9 @@ import React from "react";
 import { useState } from "react";
 import { useEffect } from "react";
 import axios from "axios";
+import { fetchAllProducts } from "../api";
+import { fetchProductByTitle } from "../api";
+import { addLikedProduct } from "../api";
 
 const ShowList = () => {
   const [title, setTitle] = useState("");
@@ -16,7 +19,7 @@ const ShowList = () => {
     if (!clickedProducts[newId]) {
       setClickedProducts((prevState) => ({
         ...prevState,
-        [newId]: true, // Set clicked status for the product ID
+        [newId]: true,
       }));
     }
 
@@ -25,78 +28,28 @@ const ShowList = () => {
       const storedData = JSON.parse(storedDataS);
       const email = storedData.email;
       setPid(newId); 
-      const response = await fetch(
-        "http://localhost:8000/api/lproducts/addlProduct",
-        {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify({
-            email: email,
-            pid: newId,
-          }),
-        }
-      );
-
-      if (!response.ok) {
-        throw new Error("Failed to like product");
-      }
-
+      await addLikedProduct(email, newId);
     } catch (error) {
   
     }
   };
 
-
-  useEffect(() => {
-    axios
-      .get("http://localhost:8000/")
-      .then((res) => console.log(res))
-      .catch((err) => console.log(err));
-  }, []);
-
   // getting all products from products table
   useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const response = await fetch(
-          `http://localhost:8000/api/products/allProducts`
-        );
-        const jsonData = await response.json();
-        if (!response.ok) {
-          throw new Error("Failed to fetch data");
-        }
-        setData(jsonData);
-      } catch (error) {
-       
-      }
-    };
+    fetchAllProducts(setData);
 
-    fetchData();
   }, []);
 
+  // handles changes in search input
   const handleChange = (value) => {
     setTitle(value);
     Dfetch(title);
   };
-// getting searched product by title
-  const Dfetch = async (title) => {
-    try {
-      const response = await fetch(
-        `http://localhost:8000/api/products/getOne?title=${title}`
-      );
-      if (!response.ok) {
-        throw new Error("Failed to fetch data");
-      }
-      const jsonData = await response.json()
-      setSearchData([jsonData]);
 
-      
-    } catch (error) {
-     
-    }
-  };
+  // getting searched product by title
+  const Dfetch = async (title) => {
+    await fetchProductByTitle(title, setSearchData);
+   };
 
 
 
