@@ -49,31 +49,31 @@ const Login = (props) => {
         </div>
 
         <div className="flex flex-col gap-4">
-          <div gap-0>
-            <div className="border p-3 rounded-lg">
-              <input
+          <div>
+            {/* <div className="border p-3 rounded-lg"> */}
+              <input className="border p-3 rounded-lg w-100"
                 value={email}
                 placeholder="Enter your email"
                 onChange={(event) => {
                   setEmail(event.target.value);
                 }}
               />
-            </div>
+            {/* </div> */}
             <label className="block text-xs text-red-700 text-left">
               {emailError}
             </label>
           </div>
 
-          <div gap-0>
-            <div className="border p-3 rounded-lg">
-              <input
+          <div>
+            {/* <div className="border p-3 rounded-lg"> */}
+              <input className="border p-3 rounded-lg w-100"
                 value={password}
                 placeholder="Enter your password"
                 onChange={(event) => {
                   setPassword(event.target.value);
                 }}
               />
-            </div>
+            {/* </div> */}
             <label className="block text-xs text-red-700 text-left ">
               {passwordError}
             </label>

@@ -48,8 +48,8 @@ const Register = (props) => {
 
       <form className="flex flex-col gap-4">
 
-        <div className="border p-3 rounded-lg">
-          <input
+        <div>
+          <input className="border p-3 rounded-lg w-100"
             value={email}
             placeholder="Enter your email"
             onChange={(event) => {
@@ -61,8 +61,8 @@ const Register = (props) => {
           </label>
         </div>
 
-        <div className="border p-3 rounded-lg">
-          <input
+        <div>
+          <input className="border p-3 rounded-lg w-100"
             value={password}
             placeholder="Enter your password"
             onChange={(event) => {
@@ -74,8 +74,8 @@ const Register = (props) => {
           </label>
         </div>
 
-        <div className="border p-3 rounded-lg">
-          <input
+        <div>
+          <input className="border p-3 rounded-lg w-100"
             value={role}
             placeholder="Enter your role"
             onChange={(event) => {

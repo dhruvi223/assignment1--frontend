@@ -34,25 +34,25 @@ const Profile = () => {
         </div>
 
         <form className="flex flex-col gap-4">
-          <div className="border p-3 rounded-lg">
-            <input
+          {/* <div className="border p-3 rounded-lg"> */}
+            <input className="border p-3 rounded-lg w-100"
               value={email}
               placeholder="Enter your email"
               onChange={(event) => {
                 setEmail(event.target.value);
               }}
             />
-          </div>
+          {/* </div> */}
 
-          <div className="border p-3 rounded-lg">
-            <input
+          {/* <div className="border p-3 rounded-lg"> */}
+            <input className="border p-3 rounded-lg w-100"
               value={role}
               placeholder="Enter your role"
               onChange={(event) => {
                 setRole(event.target.value);
               }}
             />
-          </div>
+          {/* </div> */}
 
           <Link to={"/create-list"}>
             <div
