@@ -4,6 +4,7 @@ import { useEffect } from "react";
 import { fetchAllProducts } from "../api";
 import { fetchProductByTitle } from "../api";
 import { addLikedProduct } from "../api";
+import { deletelProduct } from "../api";
 
 const ShowList = () => {
   const [title, setTitle] = useState("");
@@ -11,32 +12,35 @@ const ShowList = () => {
   const [searchData, setSearchData] = useState([]);
   const [pid, setPid] = useState();
   const [clickedProducts, setClickedProducts] = useState({});
+  const [clickCounts, setClickCounts] = useState({});
 
-
-  // adding product to liked product
   const handleClick = async (newId) => {
-    if (!clickedProducts[newId]) {
-      setClickedProducts((prevState) => ({
-        ...prevState,
-        [newId]: true,
-      }));
-    }
+    setClickedProducts((prevState) => ({
+      ...prevState,
+      [newId]: !prevState[newId],
+    }));
 
-    try {
-      const storedDataS = localStorage.getItem("user");
-      const storedData = JSON.parse(storedDataS);
-      const email = storedData.email;
-      setPid(newId); 
-      await addLikedProduct(email, newId);
-    } catch (error) {
-  
+    if (clickedProducts[newId] && clickedProducts[newId] % 2 !== 0) {
+      try {
+        const storedS = localStorage.getItem("user");
+        const stored = JSON.parse(storedS);
+        const email = stored.email;
+        await deletelProduct(newId, email);
+      } catch (error) {}
+    } else {
+      try {
+        const storedDataS = localStorage.getItem("user");
+        const storedData = JSON.parse(storedDataS);
+        const email = storedData.email;
+        setPid(newId);
+        await addLikedProduct(email, newId);
+      } catch (error) {}
     }
   };
 
   // getting all products from products table
   useEffect(() => {
     fetchAllProducts(setData);
-
   }, []);
 
   // handles changes in search input
@@ -48,16 +52,12 @@ const ShowList = () => {
   // getting searched product by title
   const Dfetch = async (title) => {
     await fetchProductByTitle(title, setSearchData);
-   };
-
-
+  };
 
   const searchArr = searchData.map((i, index) => {
     return (
       <>
-
         <div key={index} className="max-w-xs rounded overflow-hidden shadow-lg">
-          <button onClick={() => handleClick(i.id)}>Like</button>
           <div p-3 m-6>
             <img
               className="w-full"
@@ -86,16 +86,17 @@ const ShowList = () => {
     return (
       <>
         <div key={index} className="max-w-sm rounded overflow-hidden shadow-lg">
-          <button className="border rounded-lg p-3"
+          <button
+            className={`border rounded-lg p-1 w-12 h-7 ${
+              clickedProducts[i.id] && clickedProducts[i.id] % 2 !== 0
+                ? "bg-red-500 text-white"
+                : ""
+            }`}
             onClick={() => handleClick(i.id)}
-            style={{
-              backgroundColor: clickedProducts[i.id] ? "red" : "initial",
-            }}
+            style={{ fontSize: "0.75rem" }}
           >
             Like
           </button>
-
-       
 
           <img
             className="w-full"

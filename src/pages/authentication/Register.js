@@ -63,6 +63,7 @@ const Register = (props) => {
 
         <div>
           <input className="border p-3 rounded-lg w-100"
+          type="password"
             value={password}
             placeholder="Enter your password"
             onChange={(event) => {

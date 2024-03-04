@@ -1,6 +1,5 @@
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 import Home from "./pages/Home";
-import "./assets/styles/App.css"
 import Navbar from "./components/Navbar";
 import { useEffect, useState } from "react";
 import Login from "./pages/authentication/Login";
@@ -14,6 +13,7 @@ import LikedProduct from "./pages/LikedProduct";
 import { Toaster, toast } from 'react-hot-toast';
 import { verifyUser } from "./api";
 import { UserProvider } from "./UserContext";
+import './assets/styles/App.css'
 
 
 function App() {

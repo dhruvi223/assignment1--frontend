@@ -67,7 +67,9 @@ const Login = (props) => {
 
           <div>
             {/* <div className="border p-3 rounded-lg"> */}
-              <input className="border p-3 rounded-lg w-100"
+              <input 
+                type = "password"
+                className="border p-3 rounded-lg w-100"
                 value={password}
                 placeholder="Enter your password"
                 onChange={(event) => {

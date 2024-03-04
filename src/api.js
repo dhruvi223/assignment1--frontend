@@ -297,3 +297,15 @@ export const verifyUser = async () => {
     throw error;
   }
 };
+
+export const deletelProduct = async (pid, email) => {
+  try {
+    const response = await axios.delete('http://localhost:8000/api/lproducts/deletel', {
+      data: { pid, email },
+    });
+    return response.data;
+  } catch (error) {
+    console.error('Error deleting product:', error);
+    throw error;
+  }
+};
