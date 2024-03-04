@@ -17,13 +17,11 @@ const Home = (props) => {
 
   return (
     <div>
-      <div className={"titleContainer"}>
+      <div className="flex justify-center">
         <div>Welcome!</div>
       </div>
-      <div>This is the home page.</div>
-      <div className={"buttonContainer"}>
+      <div>
         <input
-          className={"inputButton"}
           type="button"
           onClick={onButtonClick}
           value={loggedIn ? "Log out" : "Log in"}
