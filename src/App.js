@@ -1,18 +1,19 @@
 import { BrowserRouter, Route, Routes } from "react-router-dom";
-import Home from "./Component/Home";
+import Home from "./pages/Home";
 import "./App.css";
 import Navbar from "./Component/Navbar";
 import { useEffect, useState } from "react";
-import Login from "./Component/Login";
-import Register from "./Component/Register";
-import Profile from "./Component/Profile";
-import CreateList from "./Component/CreateList";
-import ShowList from "./Component/ShowList";
-import UpdateProduct from "./Component/UpdateProduct";
-import DeleteProduct from "./Component/DeleteProduct";
-import LikedProduct from "./Component/LikedProduct";
+import Login from "./pages/authentication/Login";
+import Register from "./pages/authentication/Register";
+import Profile from "./pages/Profile";
+import CreateList from "./pages/CreateList";
+import ShowList from "./pages/ShowList";
+import UpdateProduct from "./pages/UpdateProduct";
+import DeleteProduct from "./pages/DeleteProduct";
+import LikedProduct from "./pages/LikedProduct";
 import { Toaster, toast } from 'react-hot-toast';
-import { verifyUser } from "./api";
+import { verifyUser } from "./constants/api";
+import { UserProvider } from "./UserContext";
 
 
 function App() {
@@ -38,6 +39,7 @@ function App() {
   return (
     <div className="App">
       <Toaster />
+      <UserProvider>
       <BrowserRouter>
         <Navbar email={email} loggedIn={loggedIn} setLoggedIn={setLoggedIn} />
         <Routes>
@@ -81,6 +83,7 @@ function App() {
           <Route path="/liked" element={<LikedProduct />} />
         </Routes>
       </BrowserRouter>
+          </UserProvider>
     </div>
   );
 }

@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 import { toast } from 'react-hot-toast';
-import { updateproduct } from "../api";
-import { uploadImage } from "../api";
+import { updateproduct } from "../constants/api";
+import { uploadImage } from "../constants/api";
 function UpdateProduct() {
 
   const [title, setTitle] = useState("");

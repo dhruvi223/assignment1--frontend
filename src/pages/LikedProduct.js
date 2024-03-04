@@ -1,14 +1,15 @@
 import React from "react";
 import { useState } from "react";
 import { useEffect } from "react";
-import { fetchProductsByPids } from "../api";
-import { fetchLProductsByEmail } from "../api";
+import { fetchProductsByPids } from "../constants/api";
+import { fetchLProductsByEmail } from "../constants/api";
 
 function LikedProduct() {
   const [data, setData] = useState("");
   const [products, setProducts] = useState([]);
-  
-  
+
+  const storedDat = localStorage.getItem("user");
+  console.log(storedDat);
   useEffect(() => {
     // get user email saved in local storage
     const storedDataS = localStorage.getItem("user");
@@ -18,21 +19,20 @@ function LikedProduct() {
     const storedData = JSON.parse(storedDataS);
     const email = storedData.email;
 
-    // get product id from likedProduct table by user id
+    // get product id from likedProduct table by user email
     if (email) {
-    fetchLProductsByEmail(email)
-      .then((data) => {
+      fetchLProductsByEmail(email).then((data) => {
         setData(data);
       });
     }
-
   }, []);
 
-
-
-
+  
+  
   // nameArray contains product id
   const namesArray = Object.keys(data).map((key) => data[key].pid);
+
+  
   
   //retrieving all product information by product id
   useEffect(() => {
@@ -40,13 +40,13 @@ function LikedProduct() {
       try {
         const productsData = await fetchProductsByPids(namesArray);
         setProducts(productsData);
-      } catch (error) {
-      }
+      } catch (error) {}
     };
 
     fetchProducts();
   }, []);
 
+ 
   const RenderItems = () => {
     return (
       <div>
@@ -85,7 +85,6 @@ function LikedProduct() {
       </div>
     );
   };
-
 
   return (
     <div>

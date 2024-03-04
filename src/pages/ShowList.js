@@ -1,10 +1,9 @@
 import React from "react";
 import { useState } from "react";
 import { useEffect } from "react";
-import axios from "axios";
-import { fetchAllProducts } from "../api";
-import { fetchProductByTitle } from "../api";
-import { addLikedProduct } from "../api";
+import { fetchAllProducts } from "../constants/api";
+import { fetchProductByTitle } from "../constants/api";
+import { addLikedProduct } from "../constants/api";
 
 const ShowList = () => {
   const [title, setTitle] = useState("");
