@@ -12,7 +12,7 @@ import UpdateProduct from "./pages/UpdateProduct";
 import DeleteProduct from "./pages/DeleteProduct";
 import LikedProduct from "./pages/LikedProduct";
 import { Toaster, toast } from 'react-hot-toast';
-import { verifyUser } from "./constants/api";
+import { verifyUser } from "./api";
 import { UserProvider } from "./UserContext";
 
 

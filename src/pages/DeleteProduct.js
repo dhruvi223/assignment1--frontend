@@ -1,7 +1,7 @@
 import React from "react";
 import { useState } from "react";
 import { toast } from 'react-hot-toast';
-import { deleteproduct } from "../constants/api";
+import { deleteproduct } from "../api";
 // for deleting product
 function DeleteProduct() {
   const [title, setTitle] = useState("");

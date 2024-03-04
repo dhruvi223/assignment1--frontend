@@ -2,7 +2,8 @@ import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { Link } from "react-router-dom";
 import { toast } from 'react-hot-toast';
-import { loginUser } from "../../constants/api";
+//import { loginUser } from "../../api";
+import { loginUser } from "../../api";
 
 const Login = (props) => {
   const [email, setEmail] = useState("");

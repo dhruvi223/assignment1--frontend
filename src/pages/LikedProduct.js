@@ -1,8 +1,8 @@
 import React from "react";
 import { useState } from "react";
 import { useEffect } from "react";
-import { fetchProductsByPids } from "../constants/api";
-import { fetchLProductsByEmail } from "../constants/api";
+import { fetchProductsByPids } from "../api";
+import { fetchLProductsByEmail } from "../api";
 
 function LikedProduct() {
   const [data, setData] = useState("");

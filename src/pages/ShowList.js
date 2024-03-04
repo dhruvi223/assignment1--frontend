@@ -1,9 +1,9 @@
 import React from "react";
 import { useState } from "react";
 import { useEffect } from "react";
-import { fetchAllProducts } from "../constants/api";
-import { fetchProductByTitle } from "../constants/api";
-import { addLikedProduct } from "../constants/api";
+import { fetchAllProducts } from "../api";
+import { fetchProductByTitle } from "../api";
+import { addLikedProduct } from "../api";
 
 const ShowList = () => {
   const [title, setTitle] = useState("");

@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { useEffect } from "react";
 import { Link } from "react-router-dom";
-import { getUserData } from "../constants/api";
+import { getUserData } from "../api";
 
 const Profile = () => {
   const [email, setEmail] = useState("");

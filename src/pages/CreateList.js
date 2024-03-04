@@ -1,7 +1,7 @@
 import React from "react";
 import { useState } from "react";
-import { createProduct } from "../constants/api";
-import { uploadImageincreateList } from "../constants/api";
+import { createProduct } from "../api";
+import { uploadImageincreateList } from "../api";
 
 const CreateList = () => {
   const [title, setTitle] = useState("");
