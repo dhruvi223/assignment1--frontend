@@ -1,7 +1,7 @@
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 import Home from "./pages/Home";
 import "./App.css";
-import Navbar from "./Component/Navbar";
+import Navbar from "./components/Navbar";
 import { useEffect, useState } from "react";
 import Login from "./pages/authentication/Login";
 import Register from "./pages/authentication/Register";
