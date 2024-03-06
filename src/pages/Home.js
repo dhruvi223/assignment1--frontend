@@ -16,7 +16,7 @@ const Home = (props) => {
   };
 
   return (
-    <div >
+    <div>
       <div className="flex justify-center">
         <div>Welcome!</div>
       </div>
@@ -27,9 +27,9 @@ const Home = (props) => {
           value={loggedIn ? "Log out" : "Log in"}
         />
       </div>
-        <div className="flex justify-center">
+      <div className="flex justify-center">
         {loggedIn ? <div>Your email address is {email}</div> : <div />}
-        </div>
+      </div>
     </div>
   );
 };

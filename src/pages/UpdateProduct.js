@@ -1,16 +1,16 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
-import { toast } from 'react-hot-toast';
-import { updateproduct } from "../api";
-import { uploadImage } from "../api";
-function UpdateProduct() {
+import { toast } from "react-hot-toast";
+import { updatepProduct } from "../redux/actions/productActions";
+import { useDispatch } from "react-redux";
 
+function UpdateProduct() {
+  const dispatch = useDispatch();
   const [title, setTitle] = useState("");
   const [price, setPrice] = useState("");
   const [description, setDescription] = useState("");
   const [category, setCategory] = useState("");
   const [file, setFile] = useState();
-  const [id, setId] = useState();
 
   const updatedData = {
     title: title,
@@ -23,29 +23,35 @@ function UpdateProduct() {
   const handleFile = (e) => {
     setFile(e.target.files[0]);
   };
- // uploading image file while updating product
+  // uploading image file while updating product
   const handleUpload = async () => {
     try {
-      const res = await uploadImage(file, title);
-    } catch (error) {
-    }
+      const formData = new FormData();
+      formData.append("image", file);
+      formData.append("title", title);
+
+      const response = await axios.post(
+        "http://localhost:8000/upupload",
+        formData
+      );
+
+      if (!response.data) {
+        throw new Error("Failed to upload image");
+      }
+
+      const res = response.data;
+    } catch (error) {}
   };
 
   // updating product
   const onButtonClick = () => {
-    console.log("onButtonClick called");
-    updateProduct(title, updatedData)
-      .catch((error) => {
-        
-      });
+    updateProduct(title, updatedData).catch((error) => {});
   };
 
   async function updateProduct(title, updatedData) {
     try {
-      const updatedProduct = await updateproduct(title, updatedData, toast);
-    } catch (error) {
-    }
-    
+      await dispatch(updatepProduct(title, updatedData, toast));
+    } catch (error) {}
   }
   return (
     <>

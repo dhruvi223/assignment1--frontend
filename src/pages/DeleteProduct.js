@@ -1,25 +1,25 @@
 import React from "react";
 import { useState } from "react";
-import { toast } from 'react-hot-toast';
-import { deleteproduct } from "../api";
+import { toast } from "react-hot-toast";
+import { deletepProduct } from "../redux/actions/productActions";
+import { useDispatch } from "react-redux";
+
 // for deleting product
 function DeleteProduct() {
+  const dispatch = useDispatch();
   const [title, setTitle] = useState("");
 
   const onButtonClick = () => {
-  
     try {
       const message = deleteProduct(title);
-    } catch (error) {
-    }
+    } catch (error) {}
   };
 
   // for deleting product
   async function deleteProduct(title) {
     try {
-      const message = await deleteproduct(title);
+      await dispatch(deletepProduct(title));
     } catch (error) {
- 
       throw error;
     }
   }

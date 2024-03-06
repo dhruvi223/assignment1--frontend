@@ -2,10 +2,12 @@ import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { Link } from "react-router-dom";
 import { toast } from 'react-hot-toast';
-//import { loginUser } from "../../api";
-import { loginUser } from "../../api";
+import { loginUser } from "../../redux/actions/productActions";
+import { useDispatch } from 'react-redux';
+import { emailMessages, passwordMessages } from "../../constants/messages";
 
 const Login = (props) => {
+  const dispatch = useDispatch();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [emailError, setEmailError] = useState("");
@@ -16,18 +18,18 @@ const Login = (props) => {
     setPasswordError("");
 
     if (email === "") {
-      setEmailError("Please enter your email");
+      setEmailError(emailMessages.empty);
     }
     if (!/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i.test(email)) {
-      setEmailError("Invalid Email address ");
+      setEmailError(emailMessages.invalid);
     }
 
     if (password === "") {
-      setPasswordError("Please enter your password");
+      setPasswordError(passwordMessages.empty);
     }
 
     if (!/^(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,32}$/.test(password)) {
-      setPasswordError("Password is weak");
+      setPasswordError(passwordMessages.weak);
       return;
     }
 
@@ -36,9 +38,14 @@ const Login = (props) => {
   
   };
 
-  const Loggin = () => {
+  const Loggin = async () => {
+    try {
+      await dispatch(loginUser(email, password, props, navigate, toast));
+    } catch (error) {
+    }
 
-    loginUser(email, password, props, navigate, toast);
+
+
   };
 
 
@@ -51,7 +58,6 @@ const Login = (props) => {
 
         <div className="flex flex-col gap-4">
           <div>
-            {/* <div className="border p-3 rounded-lg"> */}
               <input className="border p-3 rounded-lg w-100"
                 value={email}
                 placeholder="Enter your email"
@@ -59,14 +65,12 @@ const Login = (props) => {
                   setEmail(event.target.value);
                 }}
               />
-            {/* </div> */}
             <label className="block text-xs text-red-700 text-left">
               {emailError}
             </label>
           </div>
 
           <div>
-            {/* <div className="border p-3 rounded-lg"> */}
               <input 
                 type = "password"
                 className="border p-3 rounded-lg w-100"
@@ -76,7 +80,6 @@ const Login = (props) => {
                   setPassword(event.target.value);
                 }}
               />
-            {/* </div> */}
             <label className="block text-xs text-red-700 text-left ">
               {passwordError}
             </label>

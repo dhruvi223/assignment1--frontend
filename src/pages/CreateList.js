@@ -1,9 +1,15 @@
 import React from "react";
 import { useState } from "react";
-import { createProduct } from "../api";
-import { uploadImageincreateList } from "../api";
+import { useSelector } from "react-redux";
+import axios from "axios";
+import { useDispatch } from "react-redux";
+import { ActionTypes } from "../redux/constants/action-types";
+import { addProduct } from "../redux/actions/productActions";
+import { uploadFile } from "../redux/actions/productActions";
 
 const CreateList = () => {
+  const products = useSelector((state) => state.allProducts.products);
+  const dispatch = useDispatch();
   const [title, setTitle] = useState("");
   const [image, setImage] = useState();
   const [price, setPrice] = useState(0);
@@ -19,19 +25,16 @@ const CreateList = () => {
 
   // for uploading image file in creating product
   const handleUpload = async () => {
-    try{
-    const formData = new FormData();
-    formData.append("image", file);
-    formData.append("id", id);
-    const responseData = await uploadImageincreateList(formData);
-    }
-    catch(error){
-    }
+    try {
+      const formData = new FormData();
+      formData.append("image", file);
+      formData.append("id", id);
+      await dispatch(uploadFile(formData));
+    } catch (error) {}
   };
 
-// creating product
+  // creating product
   const onButtonClick = async () => {
-    //create();
     const formData = new FormData();
     formData.append("title", title);
     formData.append("price", price);
@@ -43,8 +46,6 @@ const CreateList = () => {
     for (const entry of formData.entries()) {
       const [key, value] = entry;
       if (key === "image") {
-
-
         allFormData[key] = value;
       } else {
         allFormData[key] = value;
@@ -52,13 +53,10 @@ const CreateList = () => {
     }
 
     try {
-      const data = await createProduct(allFormData);
-      setId(data.id)
-    } catch (error) {
-    }
-
+      const data = await dispatch(addProduct(formData));
+      setId(data);
+    } catch (error) {}
   };
-
 
   return (
     <div>

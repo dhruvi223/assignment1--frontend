@@ -1,10 +1,11 @@
 import React from "react";
 import { useState } from "react";
 import { useEffect } from "react";
-import { fetchAllProducts } from "../api";
-import { fetchProductByTitle } from "../api";
-import { addLikedProduct } from "../api";
-import { deletelProduct } from "../api";
+import { fetchAllProducts } from "../redux/actions/productActions";
+import { fetchProductbyTitle } from "../redux/actions/productActions";
+import { addLikedProduct } from "../redux/actions/productActions";
+import { deleteLikedProduct } from "../redux/actions/productActions";
+import { useDispatch } from "react-redux";
 
 const ShowList = () => {
   const [title, setTitle] = useState("");
@@ -12,7 +13,7 @@ const ShowList = () => {
   const [searchData, setSearchData] = useState([]);
   const [pid, setPid] = useState();
   const [clickedProducts, setClickedProducts] = useState({});
-  const [clickCounts, setClickCounts] = useState({});
+  const dispatch = useDispatch();
 
   const handleClick = async (newId) => {
     setClickedProducts((prevState) => ({
@@ -21,38 +22,53 @@ const ShowList = () => {
     }));
 
     if (clickedProducts[newId] && clickedProducts[newId] % 2 !== 0) {
+      //deleting product from likedProduct table on dislike 
       try {
         const storedS = localStorage.getItem("user");
         const stored = JSON.parse(storedS);
         const email = stored.email;
-        await deletelProduct(newId, email);
+        await dispatch(deleteLikedProduct(pid, email));
       } catch (error) {}
     } else {
+      //adding product in likedProduct table on like
       try {
         const storedDataS = localStorage.getItem("user");
         const storedData = JSON.parse(storedDataS);
         const email = storedData.email;
         setPid(newId);
-        await addLikedProduct(email, newId);
+        await dispatch(addLikedProduct(email, newId));
       } catch (error) {}
     }
   };
 
-  // getting all products from products table
-  useEffect(() => {
-    fetchAllProducts(setData);
-  }, []);
 
+  //fetching all products
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        await dispatch(fetchAllProducts(setData));
+      } catch (error) {}
+    };
+    fetchData();
+  }, [dispatch, setData]);
+
+ 
+ 
   // handles changes in search input
   const handleChange = (value) => {
     setTitle(value);
     Dfetch(title);
   };
 
-  // getting searched product by title
+  // search product by title
   const Dfetch = async (title) => {
-    await fetchProductByTitle(title, setSearchData);
+    try {
+      await dispatch(fetchProductbyTitle(title, setSearchData));
+    } catch (error) {}
   };
+
+
+
 
   const searchArr = searchData.map((i, index) => {
     return (

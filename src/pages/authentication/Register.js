@@ -2,7 +2,9 @@ import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { Link } from "react-router-dom";
 import { toast } from 'react-hot-toast';
-import { registerUser } from "../../api";
+import { registerUser } from "../../redux/actions/productActions";
+import { useDispatch } from 'react-redux';
+import { emailMessages, passwordMessages } from "../../constants/messages";
 
 const Register = (props) => {
   const [email, setEmail] = useState("");
@@ -10,6 +12,8 @@ const Register = (props) => {
   const [role, setRole] = useState("");
   const [emailError, setEmailError] = useState("");
   const [passwordError, setPasswordError] = useState("");
+  const dispatch = useDispatch();
+  
   const navigate = useNavigate();
 
   const onButtonClick = (event) => {
@@ -19,25 +23,28 @@ const Register = (props) => {
     
     // validation
     if (email === "") {
-      setEmailError("Please enter your email");
+      setEmailError(emailMessages.empty);
     }
     if (!/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i.test(email)) {
-      setEmailError("Invalid Email address ");
+      setEmailError(emailMessages.invalid);
     }
 
     if (password === "") {
-      setPasswordError("Please enter your password");
+      setPasswordError(passwordMessages.empty);
     }
 
     if (!/^(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,32}$/.test(password)) {
-      setPasswordError("Password is weak");
+      setPasswordError(passwordMessages.invalid);
       return;
     }
     Register();
   };
 
-  const Register = () => {
-    registerUser(email, password, role, props, navigate, toast);
+  const Register = async () => {
+    try {
+
+      await dispatch(registerUser(email, password, role, props, navigate, toast));
+    } catch (error) {}
   }
 
   return (

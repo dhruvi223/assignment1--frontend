@@ -1,15 +1,16 @@
 import React from "react";
 import { useState } from "react";
 import { useEffect } from "react";
-import { fetchProductsByPids } from "../api";
-import { fetchLProductsByEmail } from "../api";
+import { useDispatch } from "react-redux";
+import { fetchLProductsByEmail } from "../redux/actions/productActions";
+import { fetchProductsByPids } from "../redux/actions/productActions";
 
 function LikedProduct() {
   const [data, setData] = useState("");
   const [products, setProducts] = useState([]);
-
-  const storedDat = localStorage.getItem("user");
-  console.log(storedDat);
+  const dispatch = useDispatch();
+  
+  
   useEffect(() => {
     // get user email saved in local storage
     const storedDataS = localStorage.getItem("user");
@@ -18,35 +19,37 @@ function LikedProduct() {
     }
     const storedData = JSON.parse(storedDataS);
     const email = storedData.email;
-
+    const fetchData = async () => {
     // get product id from likedProduct table by user email
     if (email) {
-      fetchLProductsByEmail(email).then((data) => {
-        setData(data);
-      });
+        const response = await dispatch(fetchLProductsByEmail(email));
+        setData(response);
     }
+    };
+    fetchData();
   }, []);
 
-  
-  
-  // nameArray contains product id
-  const namesArray = Object.keys(data).map((key) => data[key].pid);
 
+
+  
+  // nameArray contains product ids of all liked products
+  const namesArray = Object.keys(data).map((key) => data[key].pid);
+  
+  
   
   
   //retrieving all product information by product id
   useEffect(() => {
     const fetchProducts = async () => {
       try {
-        const productsData = await fetchProductsByPids(namesArray);
+        const productsData = await dispatch(fetchProductsByPids(namesArray));
         setProducts(productsData);
       } catch (error) {}
     };
-
     fetchProducts();
   }, []);
 
- 
+  
   const RenderItems = () => {
     return (
       <div>
@@ -92,5 +95,4 @@ function LikedProduct() {
     </div>
   );
 }
-
 export default LikedProduct;
