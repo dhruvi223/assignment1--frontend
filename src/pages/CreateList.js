@@ -1,9 +1,6 @@
 import React from "react";
 import { useState } from "react";
-import { useSelector } from "react-redux";
-import axios from "axios";
 import { useDispatch } from "react-redux";
-import { ActionTypes } from "../redux/constants/action-types";
 import { addProduct } from "../redux/actions/productActions";
 import { uploadFile } from "../redux/actions/productActions";
 

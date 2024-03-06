@@ -1,8 +1,8 @@
-import React, { useEffect, useState } from "react";
-import axios from "axios";
+import React, { useState } from "react";
 import { toast } from "react-hot-toast";
 import { updatepProduct } from "../redux/actions/productActions";
 import { useDispatch } from "react-redux";
+import { uploadImageInUpdate } from "../redux/actions/productActions";
 
 function UpdateProduct() {
   const dispatch = useDispatch();
@@ -26,20 +26,7 @@ function UpdateProduct() {
   // uploading image file while updating product
   const handleUpload = async () => {
     try {
-      const formData = new FormData();
-      formData.append("image", file);
-      formData.append("title", title);
-
-      const response = await axios.post(
-        "http://localhost:8000/upupload",
-        formData
-      );
-
-      if (!response.data) {
-        throw new Error("Failed to upload image");
-      }
-
-      const res = response.data;
+      await dispatch(uploadImageInUpdate(file, title));
     } catch (error) {}
   };
 

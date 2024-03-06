@@ -1,11 +1,6 @@
 import { ActionTypes } from "../constants/action-types";
 import axios from "axios";
-export const createpProduct = (products) => {
-    return {
-        type: ActionTypes.CREATE_PRODUCT,
-        payload: products
-    };
-};
+import { toast } from "react-hot-toast";
 
   export const deletepProduct = (title) => {
     return async (dispatch) => {
@@ -65,6 +60,7 @@ export const createpProduct = (products) => {
         await axios.delete('http://localhost:8000/api/lproducts/deletel', {
           data: { pid, email },
         });
+        toast.success("Product deleted successfully:");
       } catch (error) {
         throw error;
       }
@@ -257,6 +253,7 @@ export const createpProduct = (products) => {
             },
           }
         );
+        toast.success("Product added successfully:");
         const id = response.data.id;
         return id;
       } catch (error) {
