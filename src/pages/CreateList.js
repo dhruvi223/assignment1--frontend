@@ -8,7 +8,7 @@ import { addProduct } from "../redux/actions/productActions";
 import { uploadFile } from "../redux/actions/productActions";
 
 const CreateList = () => {
-  const products = useSelector((state) => state.allProducts.products);
+
   const dispatch = useDispatch();
   const [title, setTitle] = useState("");
   const [image, setImage] = useState();

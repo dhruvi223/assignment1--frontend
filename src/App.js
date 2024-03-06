@@ -12,7 +12,6 @@ import DeleteProduct from "./pages/DeleteProduct";
 import LikedProduct from "./pages/LikedProduct";
 import { Toaster, toast } from 'react-hot-toast';
 import { verifyToken } from "./redux/actions/productActions";
-import { UserProvider } from "./UserContext";
 import './assets/styles/App.css'
 import { useDispatch } from 'react-redux';
 
@@ -39,7 +38,6 @@ function App() {
   return (
     <div className="App">
       <Toaster />
-      <UserProvider>
       <BrowserRouter>
         <Navbar email={email} loggedIn={loggedIn} setLoggedIn={setLoggedIn} />
         <Routes>
@@ -83,7 +81,6 @@ function App() {
           <Route path="/liked" element={<LikedProduct />} />
         </Routes>
       </BrowserRouter>
-          </UserProvider>
     </div>
   );
 }
